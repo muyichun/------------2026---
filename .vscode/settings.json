@@ -1,0 +1,32 @@
+{
+  // Cursor/VSCode + LaTeX Workshop: save -> build -> preview pdf
+  "latex-workshop.latex.autoBuild.run": "onSave",
+  "latex-workshop.view.pdf.viewer": "tab",
+  "latex-workshop.view.pdf.internal.synctex.keybinding": "double-click",
+  "latex-workshop.latex.outDir": "Tmp",
+  "latex-workshop.latex.tools": [
+    {
+      "name": "latexmk-xe",
+      "command": "latexmk",
+      "args": [
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "-xelatex",
+        "-outdir=Tmp",
+        "%DOC%"
+      ]
+    }
+  ],
+  "latex-workshop.latex.recipes": [
+    {
+      "name": "latexmk (xelatex)",
+      "tools": [
+        "latexmk-xe"
+      ]
+    }
+  ],
+  "latex-workshop.latex.recipe.default": "latexmk (xelatex)"
+}
+
+

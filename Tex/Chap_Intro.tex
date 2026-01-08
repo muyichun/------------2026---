@@ -1,39 +1,100 @@
 % !TEX root = ../Thesis.tex
 
-\chapter{绪论}\label{chap:introduction}{
+\chapter{绪论}\label{chap:introduction}
 
-\section{背景}
+{
 
-2022年修订的《中国科学院大学研究生学位论文撰写规范和指导意见》（以下简称《指导意见》）从2023年冬季批次开始实施。为方便各位同学使用，特提供此模板。
+\section{研究背景与意义}\label{sec:background}
 
-您在使用此模板进行学位论文撰写时，只需根据《指导意见》在相应章节填写具体内容即可。
+光学成像技术在生物医学、工业检测、遥感探测等众多领域中发挥着重要作用。随着应用需求的不断提升，人们对成像系统的空间分辨率、穿透深度、柔性化以及微型化等方面提出了更高的要求。传统的刚性内窥镜虽然能够实现高质量成像，但其刚性结构限制了在狭小、弯曲空间中的应用。相比之下，基于光纤的成像技术因其柔性、细小的特点，在微创医学成像、体内诊断等领域展现出巨大的应用潜力。
 
-本模板在第2章提供了本模板的使用说明，在第3章中提供了《指导意见》中关于内容和格式的部分要求，请仔细阅读。
+多模光纤（Multimode Fiber, MMF）作为一种能够支持多个传输模式的光纤，相比传统的光纤束具有更细的直径、更低的成本以及更大的信息传输容量。然而，由于光在多模光纤中传输时会发生模式色散和模式耦合，导致输出端呈现出复杂的散斑图案，无法直接用于成像。如何从这些看似杂乱无章的散斑图中重建出原始图像信息，成为多模光纤成像技术的核心挑战。
+
+传统的多模光纤成像方法主要包括基于波前整形的方法和基于传输矩阵的方法。这些方法虽然能够实现一定程度的图像重建，但存在标定过程复杂、对光纤扰动敏感、计算量大等问题，限制了其在实际应用中的推广。近年来，随着人工智能技术的快速发展，深度学习方法在图像处理、模式识别等领域取得了突破性进展。深度学习强大的非线性映射能力和端到端的学习方式，为解决多模光纤散斑图像重建问题提供了新的思路。
+
+本研究旨在探索基于深度学习的多模光纤散斑图像重建方法，通过构建适合该任务的神经网络模型，实现从散斑图到原始图像的直接映射。相比传统方法，深度学习方法具有以下优势：（1）无需复杂的光学标定过程；（2）具有更强的鲁棒性；（3）推理速度快，有望实现实时成像。本研究不仅有助于推动多模光纤成像技术的发展，也为柔性内窥成像、微创医学诊断等实际应用提供技术支撑。
 
 
-\section{系统要求}\label{sec:system}
-\begin{table}
-    \bicaption{\enspace 支持的LaTeX编译系统和编辑器}{\enspace Supported LaTeX compiler and editor}% caption
-    \footnotesize% fontsize
-    \setlength{\tabcolsep}{4pt}% column separation
-    \renewcommand{\arraystretch}{1.5}% row space 
-    \centering
-    \begin{tabular}{lcc}
-        \hline
-        %\multicolumn{num_of_cols_to_merge}{alignment}{contents} \\
-        %\cline{i-j}% partial hline from column i to column j
-        操作系统 & LaTeX编译系统 & LaTeX文本编辑器\\
-        \hline
-        Windows & \href{https://www.tug.org/texlive/acquire-netinstall.html}{TexLive Full} 或 \href{https://miktex.org/download}{MiKTex} & \href{http://www.xm1math.net/texmaker/}{Texmaker}\\
-        Linux & \href{https://www.tug.org/texlive/acquire-netinstall.html}{TexLive Full} & \href{http://www.xm1math.net/texmaker/}{Texmaker} 或 Vim\\
-        MacOS & \href{https://www.tug.org/mactex/}{MacTex Full} & \href{http://www.xm1math.net/texmaker/}{Texmaker} 或 Texshop\\
-        Overleaf & XeLaTeX+TexLive2021 & Overleaf \\
-        \hline
-    \end{tabular}
-    \label{tab:compiler}
-\end{table}
-\href{https://github.com/mohuangrui/ucasthesis}{\texttt{ucasthesis}} 宏包可以在目前主流的 \href{https://en.wikibooks.org/wiki/LaTeX/Introduction}{LaTeX} 编译系统中使用，如TexLive和MiKTeX。因CTex套装已停止维护，\textbf{不再建议使用} （请勿混淆CTex套装与ctex宏包。CTex套装是集成了许多LaTeX组件的LaTeX编译系统。 \href{https://ctan.org/pkg/ctex?lang=en}{ctex} 宏包如同ucasthesis，是LaTeX命令集，其维护状态活跃，并被主流的LaTeX编译系统默认集成，是几乎所有LaTeX中文文档的核心架构）。推荐的 \href{https://en.wikibooks.org/wiki/LaTeX/Installation}{LaTeX编译系统} 和 \href{https://en.wikibooks.org/wiki/LaTeX/Installation}{LaTeX文本编辑器} 为LaTeX编译系统见表～\ref{tab:compiler}。请从各软件官网下载安装程序，勿使用不明程序源。LaTeX编译系统和LaTeX编辑器分别安装成功后，即完成了LaTeX的系统配置，无需其他手动干预和配置。若系统原带有旧版的LaTeX编译系统并想安装新版，请\textbf{先卸载干净旧版再安装新版}。
+\section{国内外研究现状}\label{sec:relatedwork}
 
-使用overleaf在线编辑是一种简单有效的方法，对于绝大多数初学者来说，我们推荐使用这种无需进行系统配置的方式。在操作时，只需将压缩包上传至网站即可，无需在本地配置环境，同时支持多人，多地撰写论文。
+\subsection{多模光纤成像技术的发展}
 
-本模板兼容操作系统：Windows、Linux、MacOS、Overleaf在线编辑器，支持多种LaTeX编译引擎（pdfLaTeX、xeLaTeX、luaLaTeX）。}
+多模光纤成像技术的研究始于对光纤传输特性的深入理解。早期研究主要集中在利用多模光纤进行光信号传输和简单的图像传递。随着对光纤中光传输机制认识的深化，研究者们开始探索利用多模光纤进行高质量成像的可能性。
+
+\subsubsection{基于波前整形的方法}
+
+波前整形（Wavefront Shaping）技术是多模光纤成像领域的重要突破之一。该方法通过空间光调制器（Spatial Light Modulator, SLM）对入射光场进行相位或振幅调制，补偿光在光纤中传输时产生的畸变，从而在光纤输出端形成聚焦光斑或特定图案。这一技术为通过多模光纤进行成像提供了理论基础和实验验证。然而，波前整形方法需要复杂的迭代优化过程，且对光纤的扰动极为敏感，限制了其实际应用。
+
+\subsubsection{基于传输矩阵的方法}
+
+传输矩阵（Transmission Matrix, TM）方法通过建立输入光场与输出光场之间的线性关系矩阵，实现图像的传输和重建。该方法理论上能够完全表征多模光纤的传输特性，但传输矩阵的测量过程耗时较长，且矩阵维度巨大，给存储和计算带来了挑战。此外，传输矩阵对光纤的温度、弯曲等环境因素高度敏感，需要频繁重新标定。
+
+\subsubsection{相关散斑成像方法}
+
+相关散斑成像是另一类重要的多模光纤成像方法。该方法利用散斑场的空间相关性，通过数学算法从散斑图中提取出图像信息。虽然这类方法在一定程度上降低了对光纤稳定性的要求，但其分辨率和成像质量仍受到散斑相关性的限制。
+
+
+\subsection{深度学习在光学成像中的应用}
+
+深度学习技术的兴起为光学成像领域带来了新的研究范式。卷积神经网络（Convolutional Neural Network, CNN）因其强大的特征提取能力，在图像分类、目标检测、图像分割等任务中取得了巨大成功。近年来，深度学习方法逐渐被应用于各类光学成像问题的解决。
+
+\subsubsection{深度学习在计算成像中的应用}
+
+在计算成像领域，研究者们利用深度学习方法解决了相位恢复、全息重建、超分辨率成像等一系列问题。相比传统的迭代算法，深度学习方法能够实现更快的处理速度和更好的重建质量。特别是生成对抗网络（GAN）和U型网络（U-Net）等架构的提出，为图像重建任务提供了有效的工具。
+
+\subsubsection{深度学习在散斑成像中的应用}
+
+散斑图像的重建本质上是一个从复杂散斑模式到清晰图像的映射问题，这与深度学习擅长的模式识别和非线性映射任务高度契合。近年来，多个研究团队探索了将深度学习应用于多模光纤散斑成像的可能性。这些研究表明，神经网络能够学习到散斑图与原始图像之间的复杂映射关系，并在一定程度上对光纤扰动具有鲁棒性。
+
+\subsubsection{U-Net网络在图像重建中的优势}
+
+U-Net网络最初是为生物医学图像分割任务设计的，其编码器-解码器结构和跳跃连接机制使其在图像重建任务中表现出色。编码器部分能够提取图像的多尺度特征，解码器部分则逐步恢复图像的空间细节，跳跃连接则保留了浅层的高分辨率信息。这种架构特别适合处理散斑到图像的重建任务，因为它能够在提取散斑特征的同时保留必要的空间信息。
+
+
+\subsection{现有研究的不足}
+
+尽管深度学习在多模光纤散斑成像中展现出了潜力，但现有研究仍存在以下不足：
+
+\begin{enumerate}
+    \item \textbf{对光纤扰动的鲁棒性有待提高}：实际应用中，光纤不可避免地会受到弯曲、扭转、温度变化等因素的影响，如何提高模型对这些扰动的适应能力是一个重要问题。
+    
+    \item \textbf{训练数据的获取成本高}：构建高质量的训练数据集需要大量的实验采集工作，如何高效地构建数据集是制约技术发展的因素之一。
+    
+    \item \textbf{网络架构的优化空间}：现有研究多采用通用的网络架构，针对多模光纤散斑图像特点的专门优化较少。
+    
+    \item \textbf{实时性能有待验证}：虽然深度学习方法在推理阶段速度较快，但在实际成像系统中的实时性能仍需进一步验证和优化。
+\end{enumerate}
+
+
+\section{本文主要研究内容}\label{sec:contribution}
+
+针对上述问题，本文开展了基于深度学习的多模光纤散斑图像重建方法研究。主要研究内容包括：
+
+\begin{enumerate}
+    \item \textbf{多模光纤成像系统搭建与数据采集}：设计并搭建了多模光纤成像实验系统，建立了高质量的散斑-图像配对数据集，为深度学习方法的训练和验证提供了数据基础。
+    
+    \item \textbf{基于公开数据集的初步研究}：利用公开的光学散斑数据集，复现和验证了深度学习方法在散斑图像重建中的可行性，分析了网络架构、训练参数等关键因素对重建性能的影响。
+    
+    \item \textbf{改进的图像重建网络设计}：针对多模光纤散斑图像的特点，设计了基于U-Net的图像重建网络，优化了网络结构和训练策略，提高了重建质量和训练效率。
+    
+    \item \textbf{性能评估与分析}：通过定量指标（如PSNR、SSIM等）和定性分析，全面评估了所提方法的性能，并与现有方法进行了对比，验证了方法的有效性和优越性。
+    
+    \item \textbf{鲁棒性与实时性分析}：研究了模型对光纤扰动的鲁棒性，分析了模型的推理速度和内存占用，探讨了实时成像应用的可行性。
+\end{enumerate}
+
+
+\section{论文组织结构}\label{sec:organization}
+
+本文共分为五章，各章内容安排如下：
+
+\textbf{第一章}为绪论，介绍了研究背景与意义，综述了多模光纤成像技术和深度学习在光学成像中的应用现状，分析了现有研究的不足，阐述了本文的主要研究内容。
+
+\textbf{第二章}介绍理论基础，详细阐述了多模光纤的传输特性、散斑的形成机制、多模光纤成像的基本原理，以及深度学习的基础知识，重点介绍了卷积神经网络和U-Net网络架构。
+
+\textbf{第三章}介绍基于公开数据集的初步研究工作，包括数据集介绍、网络模型设计、训练过程以及实验结果分析，为后续研究奠定基础。
+
+\textbf{第四章}详细介绍本文提出的基于深度学习的多模光纤散斑图像重建方法，包括实验系统搭建、数据集构建、网络模型设计、训练优化以及详细的实验结果与分析，这是本文的核心内容。
+
+\textbf{第五章}对全文进行总结，归纳本文的主要工作和创新点，并对未来的研究方向进行展望。
+
+}

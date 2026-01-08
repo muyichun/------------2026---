@@ -1,9 +1,9 @@
 % !TEX root = ../Thesis.tex
 
-\chapter{基于公开数据集的基线复现与DLU-Net改进}\label{chap:preliminary}
+\chapter{基于公开数据集的神经网络重建实验}\label{chap:preliminary}
 
 {
-本章围绕公开的“散斑—目标图像”配对数据集开展前期研究工作：以文献\citep{sun2024ol_calibrationfree}公开的数据集为基础，建立U-Net基线，并在此基础上改进得到Deep Leaky U-Net（DLU-Net）网络结构，对公开数据集进行重建实验与验证分析。本章的目的在于（1）明确公开数据集上的可复现实验流程与评价指标；（2）通过基线实验得到若干结论性观察，为第\ref{chap:method}章的实验系统与方法设计提供依据与动机。
+本章围绕公开的“散斑—目标图像”配对数据集开展前期研究工作：基于文献\citep{sun2024ol_calibrationfree}公开的数据集，对神经网络重建方法进行验证实验，并通过结构相似度（SSIM）衡量手写数字数据集与服装数据集的重建效果。本章的目的在于建立公开数据集上的验证流程与对照基准，为第\ref{chap:method}章的自建实验系统与方法验证提供参照。
 
 \section{公开数据集与任务定义}\label{sec:public_dataset}
 
@@ -41,42 +41,28 @@
     \item \textbf{数据增强（可选）}：对训练集进行随机翻转、旋转、噪声扰动等增强，以提升泛化能力（是否启用与增强参数在实验记录中明确给出）。
 \end{enumerate}
 
-\section{基线模型：U-Net}\label{sec:baseline_unet}
+\section{神经网络模型与实验设置}\label{sec:baseline_unet}
 
-\subsection{选择U-Net作为基线的原因}\label{sec:why_unet}
+\subsection{网络模型说明}\label{sec:why_unet}
 
-U-Net由于其编码器-解码器结构与跳跃连接机制，能够兼顾全局语义与局部细节，在各类图像重建任务中表现稳定（第\ref{chap:theory}章已给出其结构与优势）。因此，本章以U-Net作为公开数据集的基线模型，用于建立可对比、可复现的重建性能参考。
+本章采用编码器-解码器结构的神经网络作为重建模型，用于学习散斑图像到目标图像的映射关系。该类模型具备多尺度特征提取与细节恢复能力，适用于图像到图像的重建任务。更进一步的网络结构改进将在第\ref{chap:method}章中结合自建实验数据展开。
 
-\subsection{网络结构与实现细节}\label{sec:unet_detail}
+\subsection{实现与训练细节}\label{sec:unet_detail}
 
-本章U-Net基线遵循经典结构：若干级下采样编码器与对称上采样解码器，并在对应尺度通过跳跃连接拼接特征。为便于后续对比，除非特别说明，本章所有模型使用相同的输入输出尺寸、训练轮数、批大小以及学习率调度策略。
+为便于复现与后续章节对比，本章固定输入输出尺寸、训练轮数、批大小、学习率调度等关键设置，并记录数据划分与随机种子。若你希望把具体数值写成表格，可以在此处补充一张“实验设置表”。
 
-（\textbf{提示}：若你希望在论文中给出U-Net结构图，可在此处放置图\ref{fig:unet_arch}，图形可用你自己绘制的示意图，避免直接复制他人原图。）
+\noindent\draftmark{待你填写：训练轮数、批大小、学习率、输入/输出尺寸等关键参数。}
+
+% 注：图\ref{fig:unet_arch}为参考文献原图的复用，已在中英文图题中注明来源。
 
 \begin{figure}[!htbp]
     \centering
-    %\includegraphics[width=0.90\textwidth]{unet_architecture}
-    \bicaption{\enspace U-Net网络结构示意图}{\enspace Schematic of U-Net architecture}
-    \fignote{建议根据文献与实现细节自行绘制。}
+    \includegraphics[width=0.90\textwidth]{Img/3/3-1.png}
+    \captionsetup{justification=centering,singlelinecheck=false}
+    \bicaption{\enspace U-Net网络结构示意图\citep{sun2024ol_calibrationfree}}
+              {\enspace U-Net Network Architecture Diagram\citep{sun2024ol_calibrationfree}}
     \label{fig:unet_arch}
 \end{figure}
-
-\section{改进模型：DLU-Net}\label{sec:dlunet}
-
-\subsection{DLU-Net的设计动机}\label{sec:dlunet_motivation}
-
-在公开数据集的基线实验中，我们希望在保持端到端推理效率的同时，进一步提升对复杂纹理与边缘细节的重建能力。基于此，本章在U-Net的基础上提出Deep Leaky U-Net（DLU-Net），并用于本章公开数据集重建实验。该网络结构也在作者的科研论文中出现（见\texttt{ref/个人科研成果/论文.pdf}），后续第\ref{chap:method}章将以此为基础展开面向自建实验系统的数据集与方法设计。
-
-\subsection{DLU-Net结构概述}\label{sec:dlunet_detail}
-
-DLU-Net作为U-Net的改进版本，核心思想是通过\textbf{更深的特征提取路径（Deep）}与\textbf{LeakyReLU激活（Leaky）}增强网络表达能力并缓解梯度传播问题。其具体结构以你在工程实现与科研论文中的定义为准，本章给出概念性描述与复现要点：
-\begin{enumerate}
-    \item \textbf{激活函数替换}：将卷积块中的ReLU替换为LeakyReLU，以降低“神经元死亡”风险。
-    \item \textbf{网络深度/宽度调整（可选）}：通过增加下采样层级或通道数提升表达能力（需在论文中给出明确配置）。
-    \item \textbf{训练稳定性增强（可选）}：如批归一化/残差连接/正则化等（若使用，请在实现小节中说明）。
-\end{enumerate}
-
-（\draftmark{待你确认}：请你后续给我一份DLU-Net的“层级数、每层通道数、卷积核大小、激活、是否BN/Dropout”等配置，我会把这里补成可直接复现的结构表，并在第\ref{chap:method}章复用。）
 
 \section{训练策略与评价指标}\label{sec:train_metric}
 
@@ -90,93 +76,75 @@ DLU-Net作为U-Net的改进版本，核心思想是通过\textbf{更深的特征
 
 \subsection{优化器与学习率策略}\label{sec:optimizer}
 
-优化器采用Adam，并参考文献\citep{sun2024ol_calibrationfree}的设置：初始学习率为$1\times 10^{-4}$，并按固定步长衰减；批大小设置为64。为保证公平对比，U-Net与DLU-Net采用一致的优化策略与训练轮数。
+优化器采用Adam，并参考文献\citep{sun2024ol_calibrationfree}的设置：初始学习率为$1\times 10^{-4}$，并按固定步长衰减；批大小设置为64。为保证可复现，本章固定训练策略与训练轮数。
 
-\subsection{评价指标}\label{sec:metrics}
+\subsection{评价指标：SSIM}\label{sec:metrics}
 
-为全面评估重建质量，本章采用以下指标：
-\begin{itemize}
-    \item \textbf{相关系数（Correlation Coefficient, CC）}：衡量重建图像与目标图像的相似性。文献\citep{sun2024ol_calibrationfree}使用二维相关系数作为主要“保真度（fidelity）”指标。
-    \item \textbf{峰值信噪比（PSNR）}与\textbf{结构相似度（SSIM）}：常用于图像重建质量评估。
-    \item \textbf{推理时间/帧率}：用于评估实时性潜力（尤其适用于内窥成像场景）。
-\end{itemize}
+本章使用结构相似度（Structural Similarity Index Measure, SSIM）作为主要评价指标。SSIM用于衡量两幅图像在亮度、对比度与结构信息上的一致性，其取值通常在$[0,1]$范围内，值越大表示重建图像与目标图像越相似。为清晰起见，本文报告两类数据集测试集上的平均SSIM作为定量结果。
+
+\noindent\draftmark{待你填写：手写数字数据集与服装数据集的平均SSIM。}
 
 \section{实验结果与分析}\label{sec:results_public}
 
 \subsection{定性结果展示}\label{sec:qualitative}
 
-本节建议分别给出“手写数字”和“服装数据集”的可视化对比：目标图像、输入散斑、U-Net重建、DLU-Net重建。为便于排版，可采用每行一组、每列一种方法的网格布局。
+本节分别给出“手写数字数据集”和“服装数据集”的重建结果示例，建议每组样本展示：目标图像、输入散斑、重建结果。\draftmark{待你替换真实验证图片。}
 
 \begin{figure}[!htbp]
     \centering
-    %\includegraphics[width=0.98\textwidth]{public_digits_visual}
+    \fbox{\parbox[c][0.28\textheight][c]{0.90\textwidth}{\centering \draftmark{待你替换真实图片：手写数字数据集重建结果示例}}}
     \bicaption{\enspace 手写数字数据集的重建结果示例}{\enspace Reconstruction examples on handwritten digits dataset}
-    \fignote{依次展示：目标图像、输入散斑、U-Net重建、DLU-Net重建。}
     \label{fig:public_digits}
 \end{figure}
 
 \begin{figure}[!htbp]
     \centering
-    %\includegraphics[width=0.98\textwidth]{public_fashion_visual}
+    \fbox{\parbox[c][0.28\textheight][c]{0.90\textwidth}{\centering \draftmark{待你替换真实图片：服装数据集重建结果示例}}}
     \bicaption{\enspace 服装数据集的重建结果示例}{\enspace Reconstruction examples on fashion dataset}
-    \fignote{依次展示：目标图像、输入散斑、U-Net重建、DLU-Net重建。}
     \label{fig:public_fashion}
 \end{figure}
 
 \subsection{定量对比}\label{sec:quantitative}
 
-本节建议以表格汇总两类数据集上的CC/PSNR/SSIM等指标，并对U-Net与DLU-Net进行对比。若你已完成实验，请把均值与标准差（或中位数与分位数）提供给我，我会把表格补齐并在正文中给出分析结论。
+本节汇总两类数据集测试集上的平均SSIM，用于量化重建效果并进行对照分析。
 
 \begin{table}[!htbp]
     \centering
-    \bicaption{\enspace 公开数据集上的定量对比结果}{\enspace Quantitative comparison on public datasets}
+    \bicaption{\enspace 公开数据集上的SSIM评价结果}{\enspace SSIM results on public datasets}
     \label{tab:public_quant}
     \footnotesize
     \setlength{\tabcolsep}{6pt}
     \renewcommand{\arraystretch}{1.2}
-    \begin{tabular}{lcccc}
+    \begin{tabular}{lcc}
         \hline
-        数据集 & 方法 & CC（↑） & PSNR（↑） & SSIM（↑）\\
+        数据集 & 指标 & 数值（↑）\\
         \hline
-        手写数字 & U-Net & % TODO
-        & % TODO
-        & % TODO
-        \\
-        手写数字 & DLU-Net & % TODO
-        & % TODO
-        & % TODO
-        \\
-        服装数据集 & U-Net & % TODO
-        & % TODO
-        & % TODO
-        \\
-        服装数据集 & DLU-Net & % TODO
-        & % TODO
-        & % TODO
-        \\
+        手写数字数据集 & SSIM & \draftmark{待填} \\
+        服装数据集 & SSIM & \draftmark{待填} \\
         \hline
     \end{tabular}
 \end{table}
 
 \subsection{与参考文献结果的关系}\label{sec:compare_paper}
 
-文献\citep{sun2024ol_calibrationfree}报告其端到端网络在实验数据上可实现毫秒级重建，并取得较高保真度。由于本章的网络结构（DLU-Net）与其网络实现可能不同，且数据集划分、预处理方式等细节会影响结果，因此本章更强调“复现实验流程与相对对比结论”。在后续章节中，我们将把这些结论迁移到自建实验系统，并进一步评估对光纤扰动、噪声以及跨域泛化的影响。
+文献\citep{sun2024ol_calibrationfree}报告其端到端网络在实验数据上可实现毫秒级重建，并取得较高保真度。由于网络实现细节、数据集划分、预处理方式等会影响结果，因此本章更强调“公开数据集验证流程”与“基于SSIM的对照结论”。在后续章节中，我们将把这些结论迁移到自建实验系统，并进一步评估对光纤扰动、噪声以及跨域泛化的影响。
+
+% 注：本章不展开网络结构改进细节，相关内容将在第\ref{chap:method}章结合自建实验系统进行详细阐述。
 
 \section{结论性观察与对后续工作的启示}\label{sec:insights_to_next}
 
-通过公开数据集的基线复现与DLU-Net改进实验，本章形成以下结论性观察（建议你结合实验结果补充具体数据支撑）：
+通过公开数据集的重建实验与SSIM定量评估，本章形成以下结论性观察（建议你结合实验结果补充具体数据支撑）：
 \begin{enumerate}
     \item \textbf{端到端网络能够有效学习散斑到目标图像的映射}：在手写数字与服装两类数据上均能实现可辨识的重建结果。
     \item \textbf{数据复杂度提升会显著增加重建难度}：服装数据集的纹理与结构更复杂，模型更容易出现细节缺失或局部伪影。
-    \item \textbf{DLU-Net在细节/鲁棒性上具有潜在优势}：相较U-Net，DLU-Net在某些样本上能更好地保持边缘与细节（需用定量指标或可视化对比支撑）。
     \item \textbf{训练与预处理细节对结果影响显著}：归一化方式、数据增强、学习率策略等都会影响收敛与泛化。
 \end{enumerate}
 
-基于上述观察，第\ref{chap:method}章将围绕“自建实验系统的数据集构建”和“面向实际光纤扰动的鲁棒重建”展开，进一步验证DLU-Net及其改进策略在真实实验场景中的有效性。
+基于上述观察，第\ref{chap:method}章将围绕“自建实验系统的数据集构建”和“面向真实实验场景的鲁棒重建”展开，并进一步给出网络结构改进与实验验证。
 
 \section{本章小结}
 
-本章基于文献\citep{sun2024ol_calibrationfree}公开的数据集建立了散斑图像重建的复现实验流程，并以U-Net为基线模型开展对比研究。在此基础上提出并验证了DLU-Net改进网络的可行性，给出了训练策略、评价指标与结果分析框架，并总结了若干结论性观察，为后续第\ref{chap:method}章的实验系统设计、网络结构选择与性能评估提供了依据与动机。
+本章基于文献\citep{sun2024ol_calibrationfree}公开的数据集建立了散斑图像重建的验证流程，并使用SSIM对手写数字与服装两类数据集的重建效果进行量化评估。公开数据集上的实验为后续章节基于自建实验系统的数据集构建、方法设计与性能评估提供了对照基准。
 
 }
 

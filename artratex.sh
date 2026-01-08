@@ -81,7 +81,8 @@ export BSTINPUTS=".//:$BSTINPUTS" # paths to locate .bst
 #-
 #-> Build textual content and auxiliary files
 #-
-$TexCompiler -output-directory=$Tmp $FileName || exit
+TEXFLAGS="-synctex=1 -interaction=nonstopmode -file-line-error -output-directory=$Tmp"
+$TexCompiler $TEXFLAGS $FileName || exit
 #-
 #-> Build references and links
 #-
@@ -96,9 +97,9 @@ if [[ -n $BibCompiler ]]; then
     #- extract and format bibliography database via auxiliary files
     $BibCompiler $Tmp/$FileName
     #- insert reference indicators into textual content
-    $TexCompiler -output-directory=$Tmp $FileName || exit
+    $TexCompiler $TEXFLAGS $FileName || exit
     #- refine citation references and links
-    $TexCompiler -output-directory=$Tmp $FileName || exit
+    $TexCompiler $TEXFLAGS $FileName || exit
 fi
 #---------------------------------------------------------------------------#
 #->> Postprocessing
@@ -118,7 +119,8 @@ fi
 #-> Open the compiled file
 #-
 if [[ -z "${ARTRATEX_NO_VIEW}" ]]; then
-    $PDFviewer ./$Tmp/"$FileName".pdf || exit
+    # Viewer failure should not be treated as compilation failure.
+    $PDFviewer ./$Tmp/"$FileName".pdf >/dev/null 2>&1 || true
 fi
 echo "---------------------------------------------------------------------------"
 echo "$TexCompiler $BibCompiler "$FileName".tex finished..."

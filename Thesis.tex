@@ -42,6 +42,16 @@
 %- [math]% enable some extra math packages
 %- [xlink]% disable link colors
 \usepackage{Style/artracom}% user defined commands
+
+%---------------------------------------------------------------------------%
+%->> Draft markups (visible in PDF; should be removed before final submission)
+%---------------------------------------------------------------------------%
+\newcommand{\draftmark}[1]{%
+  \begingroup%
+  \setlength{\fboxsep}{1.2pt}%
+  \colorbox{yellow!40}{\textbf{#1}}%
+  \endgroup%
+}
 %---------------------------------------------------------------------------%
 %->> Document inclusion
 %---------------------------------------------------------------------------%

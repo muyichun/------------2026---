@@ -82,6 +82,8 @@ export BSTINPUTS=".//:$BSTINPUTS" # paths to locate .bst
 #-> Build textual content and auxiliary files
 #-
 TEXFLAGS="-synctex=1 -interaction=nonstopmode -file-line-error -output-directory=$Tmp"
+# Avoid occasional SyncTeX rename failures when the PDF viewer holds the old file.
+rm -f "$Tmp/$FileName.synctex.gz" "$Tmp/$FileName.synctex" 2>/dev/null || true
 $TexCompiler $TEXFLAGS $FileName || exit
 #-
 #-> Build references and links

@@ -709,9 +709,9 @@ lr_{\text{epoch}} = lr_{\text{init}} \times \gamma^{\text{epoch}},
     \item \textbf{GPU}：2 × NVIDIA GeForce RTX 4090（24 GB显存/卡）
     \item \textbf{CPU}：Intel Core i9-14900K（24核心，32线程）
     \item \textbf{内存}：128 GB DDR5
-    \item \textbf{操作系统}：Ubuntu 20.04 LTS
-    \item \textbf{深度学习框架}：PyTorch 1.12.0 + CUDA 11.6
-    \item \textbf{Python版本}：Python 3.8.10
+    \item \textbf{操作系统}：Ubuntu 22.04 LTS
+    \item \textbf{深度学习框架}：PyTorch 2.0.1 + CUDA 11.8
+    \item \textbf{Python版本}：Python 3.10.12
 \end{itemize}
 
 每个epoch的训练时间约为\textbf{3分钟}（60,000张训练图像，批大小64），完整的40个epoch训练时间约为\textbf{2小时}。验证集评估时间约为30秒/epoch。
@@ -791,7 +791,7 @@ lr_{\text{epoch}} = lr_{\text{init}} \times \gamma^{\text{epoch}},
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.95\textwidth]{Img/4/mnist-tsne-hologram.pdf}
-    \bicaption{\enspace MNIST数据集的t-SNE降维聚类（按全息标签着色）。(a) s偏振；(b) p偏振；(c) 混合偏振s+p。t-SNE投影展现出更加紧凑和分离的聚类结构，每个全息标签对应的散斑图形成明显的子簇。}{\enspace t-SNE clustering of MNIST speckle patterns colored by holographic label. (a) s-polarization; (b) p-polarization; (c) mixed s+p polarization. t-SNE reveals more compact and separated cluster structures with distinct sub-clusters for each holographic label.}
+    \bicaption{\enspace MNIST数据集的t-SNE降维聚类（按全息标签着色）。(d) s偏振；(e) p偏振；(f) 混合偏振s+p。t-SNE投影展现出更加紧凑和分离的聚类结构，每个全息标签对应的散斑图形成明显的子簇。}{\enspace t-SNE clustering of MNIST speckle patterns colored by holographic label. (d) s-polarization; (e) p-polarization; (f) mixed s+p polarization. t-SNE reveals more compact and separated cluster structures with distinct sub-clusters for each holographic label.}
     \label{fig:mnist_tsne_hologram}
 \end{figure}
 
@@ -811,7 +811,7 @@ lr_{\text{epoch}} = lr_{\text{init}} \times \gamma^{\text{epoch}},
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.95\textwidth]{Img/4/mnist-correlation-matrix.pdf}
-    \bicaption{\enspace MNIST数据集的散斑图相关性矩阵（按全息标签分组）。(a) s偏振；(b) p偏振；(c) 混合偏振s+p。散斑图ID按全息标签顺序排列（每个标签2,000张，ID 0-1999对应标签1，ID 2000-3999对应标签2，依此类推）。对角线上的高相关性块表明同一全息标签下的散斑图具有强相关性，而不同标签之间的相关性极低。}{\enspace Correlation matrices of MNIST speckle patterns grouped by holographic labels. (a) s-polarization; (b) p-polarization; (c) mixed s+p polarization. Speckle IDs are sequentially indexed by holographic labels (2,000 patterns per label). High correlation blocks along the diagonal indicate strong intra-label correlations, while inter-label correlations remain minimal.}
+    \bicaption{\enspace MNIST数据集的散斑图相关性矩阵（按全息标签分组）。(g) s偏振；(h) p偏振；(i) 混合偏振s+p。散斑图ID按全息标签顺序排列（每个标签2,000张，ID 0-1999对应标签1，ID 2000-3999对应标签2，依此类推）。对角线上的高相关性块表明同一全息标签下的散斑图具有强相关性，而不同标签之间的相关性极低。}{\enspace Correlation matrices of MNIST speckle patterns grouped by holographic labels. (g) s-polarization; (h) p-polarization; (i) mixed s+p polarization. Speckle IDs are sequentially indexed by holographic labels (2,000 patterns per label). High correlation blocks along the diagonal indicate strong intra-label correlations, while inter-label correlations remain minimal.}
     \label{fig:mnist_correlation_matrix}
 \end{figure}
 
@@ -842,7 +842,7 @@ lr_{\text{epoch}} = lr_{\text{init}} \times \gamma^{\text{epoch}},
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.85\textwidth]{Img/4/mnist-dual-encoding.pdf}
-    \bicaption{\enspace MNIST数据集双编码联合聚类。(a) UMAP投影；(b) t-SNE投影。数据集包含50,000张散斑图：s偏振下25个全息标签各1,000张（共25,000张）+ p偏振下25个全息标签各1,000张（共25,000张），形成50个复合标签。两种降维方法均清晰展现出50个可区分的聚类簇，验证了双编码方案的协同效应和可扩展性。}{\enspace Dual-encoding clustering of MNIST speckle patterns. (a) UMAP projection; (b) t-SNE projection. Dataset contains 50,000 patterns: 25 holographic labels × 1,000 patterns under s-pol (25,000 total) + 25 holographic labels × 1,000 patterns under p-pol (25,000 total), forming 50 composite labels. Both methods reveal 50 distinct clusters, validating the synergy and scalability of dual-encoding.}
+    \bicaption{\enspace MNIST数据集双编码联合聚类。(c) UMAP投影；(d) t-SNE投影。数据集包含50,000张散斑图：s偏振下25个全息标签各1,000张（共25,000张）+ p偏振下25个全息标签各1,000张（共25,000张），形成50个复合标签。两种降维方法均清晰展现出50个可区分的聚类簇，验证了双编码方案的协同效应和可扩展性。}{\enspace Dual-encoding clustering of MNIST speckle patterns. (c) UMAP projection; (d) t-SNE projection. Dataset contains 50,000 patterns: 25 holographic labels × 1,000 patterns under s-pol (25,000 total) + 25 holographic labels × 1,000 patterns under p-pol (25,000 total), forming 50 composite labels. Both methods reveal 50 distinct clusters, validating the synergy and scalability of dual-encoding.}
     \label{fig:mnist_dual_encoding}
 \end{figure}
 

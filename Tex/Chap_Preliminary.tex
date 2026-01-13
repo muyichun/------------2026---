@@ -25,30 +25,25 @@
 
 \citet{sun2024ol_calibrationfree}报告其公开数据集包含大量成对样本（散斑、目标图像），并包含两类目标内容：手写数字与服装图像。本章基于下载获取的公开数据集进行实验验证，具体数据划分如下：
 
-\paragraph{手写数字数据集} 该数据集包含手写数字（0-9）及其对应的光学散斑图像，按照编号进行划分：
-\begin{itemize}
-    \item \textbf{训练集}：26,001张（编号0\textasciitilde26000），用于网络参数学习。
-    \item \textbf{验证集}：3,300张（编号26001\textasciitilde29300），用于选择超参数与观察收敛情况。
-    \item \textbf{测试集}：78张（编号29301\textasciitilde29378），用于最终性能评估与可视化展示。
-\end{itemize}
+\paragraph{手写数字数据集} 该数据集包含手写数字（0-9）及其对应的光学散斑图像，共计29,379张配对样本。按照编号进行划分：训练集26,001张（编号0\textasciitilde26000），用于网络参数学习；验证集3,300张（编号26001\textasciitilde29300），用于选择超参数与监控收敛过程；测试集78张（编号29301\textasciitilde29378），用于最终性能评估与可视化展示。
 
-\paragraph{服装数据集} 该数据集包含服装图像及其对应的光学散斑图像，采用与手写数字数据集类似的划分策略（具体样本数量根据实际下载数据确定）。
+\paragraph{服装数据集} 该数据集包含服装图像及其对应的光学散斑图像，共计20,797张配对样本。按照编号进行划分：训练集18,001张（编号0\textasciitilde18000），用于网络参数学习；验证集2,700张（编号18001\textasciitilde20700），用于超参数选择与收敛监控；测试集96张（编号20701\textasciitilde20796），用于最终性能评估与可视化展示。
 
-表\ref{tab:dataset_division}汇总了两类数据集的划分情况。
+表\ref{tab:dataset_division}汇总了两类数据集的详细划分情况。
 
 \begin{table}[!htbp]
     \centering
     \bicaption{\enspace 公开数据集的划分统计}{\enspace Division statistics of public datasets}
     \label{tab:dataset_division}
     \footnotesize
-    \setlength{\tabcolsep}{8pt}
+    \setlength{\tabcolsep}{10pt}
     \renewcommand{\arraystretch}{1.2}
-    \begin{tabular}{lccc}
+    \begin{tabular}{lcccc}
         \hline
-        数据集 & 训练集 & 验证集 & 测试集 \\
+        数据集 & 训练集 & 验证集 & 测试集 & 总计 \\
         \hline
-        手写数字数据集 & 26,001 & 3,300 & 78 \\
-        服装数据集 & \draftmark{待填} & \draftmark{待填} & \draftmark{待填} \\
+        手写数字数据集 & 26,001 & 3,300 & 78 & 29,379 \\
+        服装数据集 & 18,001 & 2,700 & 96 & 20,797 \\
         \hline
     \end{tabular}
 \end{table}
@@ -86,6 +81,19 @@
     \item \textbf{上采样}：使用$4\times 4$转置卷积，步长为2，填充为1。
     \item \textbf{跳跃连接}：通过通道维度拼接实现编码器与解码器对应层的特征融合。
 \end{itemize}
+
+图\ref{fig:unet_arch}展示了U-Net网络的整体架构示意图。
+
+% 注：图\ref{fig:unet_arch}为参考文献原图的复用，已在中英文图题中注明来源。
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.90\textwidth]{Img/3/3-1.png}
+    \captionsetup{justification=centering,singlelinecheck=false}
+    \bicaption{\enspace U-Net网络结构示意图\citep{sun2024ol_calibrationfree}}
+              {\enspace U-Net Network Architecture Diagram\citep{sun2024ol_calibrationfree}}
+    \label{fig:unet_arch}
+\end{figure}
 
 \subsection{实现与训练细节}\label{sec:unet_detail}
 
@@ -128,17 +136,6 @@
         \hline
     \end{tabular}
 \end{table}
-
-% 注：图\ref{fig:unet_arch}为参考文献原图的复用，已在中英文图题中注明来源。
-
-\begin{figure}[!htbp]
-    \centering
-    \includegraphics[width=0.90\textwidth]{Img/3/3-1.png}
-    \captionsetup{justification=centering,singlelinecheck=false}
-    \bicaption{\enspace U-Net网络结构示意图\citep{sun2024ol_calibrationfree}}
-              {\enspace U-Net Network Architecture Diagram\citep{sun2024ol_calibrationfree}}
-    \label{fig:unet_arch}
-\end{figure}
 
 \section{训练策略与评价指标}\label{sec:train_metric}
 
@@ -216,9 +213,7 @@ SSIM的计算公式为：
     \label{fig:fashion_examples}
 \end{figure}
 
-\noindent\draftmark{注：服装数据集实验正在进行中，以下图\ref{fig:fashion_ssim_dist}和图\ref{fig:fashion_all_results}待补充实际结果。}
-
-图\ref{fig:fashion_ssim_dist}展示了服装数据集测试集样本的SSIM分布散点图，用于量化评估网络在该数据集上的重建质量与稳定性。
+图\ref{fig:fashion_ssim_dist}展示了服装数据集96张测试集样本的SSIM分布散点图，用于量化评估网络在该数据集上的重建质量与稳定性。
 
 \begin{figure}[!htbp]
     \centering
@@ -227,13 +222,15 @@ SSIM的计算公式为：
     \label{fig:fashion_ssim_dist}
 \end{figure}
 
-图\ref{fig:fashion_all_results}给出了服装数据集全部测试集样本的重建结果缩略图，每张结果图上标注了对应的SSIM值，直观展示网络在不同服装类型上的重建性能。
+\noindent\draftmark{注：图\ref{fig:fashion_ssim_dist}和图\ref{fig:fashion_result}待补充实际图片文件。}
+
+图\ref{fig:fashion_result}给出了服装数据集全部96张测试集样本的重建结果缩略图，每张结果图上标注了对应的SSIM值，直观展示网络在不同服装类型上的重建性能。
 
 \begin{figure}[!htbp]
     \centering
-    % \includegraphics[width=0.95\textwidth]{Img/3/fashion_all_results.pdf}
-    \bicaption{\enspace 服装数据集全部测试集重建结果（每张结果标注SSIM值）}{\enspace All reconstruction results on fashion test set (each with SSIM value labeled)}
-    \label{fig:fashion_all_results}
+    % \includegraphics[width=0.95\textwidth]{Img/3/fashion_result.pdf}
+    \bicaption{\enspace 服装数据集全部96张测试集重建结果（每张结果标注SSIM值）}{\enspace All 96 reconstruction results on fashion test set (each with SSIM value labeled)}
+    \label{fig:fashion_result}
 \end{figure}
 
 \subsection{定量对比}\label{sec:quantitative}
@@ -257,7 +254,7 @@ SSIM的计算公式为：
     \end{tabular}
 \end{table}
 
-从表\ref{tab:public_quant}可以看出，手写数字数据集的平均SSIM达到0.982，且所有78张测试样本的SSIM值均保持在0.975以上（如图\ref{fig:mnist_ssim_dist}所示），显示出较高的重建稳定性和一致性。结合图\ref{fig:mnist_all_results}展示的全部测试样本重建结果，可以观察到网络对不同手写数字（0-9）均能实现高质量重建。该结果与\citet{sun2024ol_calibrationfree}报告的实验结论基本吻合，验证了基于Python+PyTorch复现实现的有效性。
+从表\ref{tab:public_quant}可以看出，手写数字数据集的平均SSIM达到0.982，且所有78张测试样本的SSIM值均保持在0.975以上（如图\ref{fig:mnist_ssim_dist}所示），显示出较高的重建稳定性和一致性。结合图\ref{fig:mnist_result}展示的全部测试样本重建结果，可以观察到网络对不同手写数字（0-9）均能实现高质量重建。该结果与\citet{sun2024ol_calibrationfree}报告的实验结论基本吻合，验证了基于Python+PyTorch复现实现的有效性。
 
 \subsection{与参考文献结果的关系}\label{sec:compare_paper}
 

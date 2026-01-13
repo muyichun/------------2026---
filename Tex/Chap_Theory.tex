@@ -104,7 +104,15 @@ y = f\left(\sum_{i=1}^{n} w_i x_i + b\right)
     \item Tanh函数：$\tanh(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}}$
 \end{itemize}
 
-多层神经网络通过将多个神经元按层组织，形成输入层、隐藏层和输出层。网络的训练通过反向传播算法（Backpropagation）实现，根据损失函数的梯度更新网络参数。
+多层神经网络通过将多个神经元按层组织，形成输入层、隐藏层和输出层。图\ref{fig:dnn}展示了典型的全连接神经网络（深度神经网络）结构。网络的训练通过反向传播算法（Backpropagation）实现，根据损失函数的梯度更新网络参数。
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.75\textwidth]{Img/2/DNN.png}
+    \bicaption{\enspace 全连接神经网络（深度神经网络）结构示意图}
+              {\enspace Fully connected neural network (Deep Neural Network, DNN) architecture}
+    \label{fig:dnn}
+\end{figure}
 
 \subsection{卷积神经网络}
 

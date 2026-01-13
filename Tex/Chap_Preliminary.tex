@@ -11,7 +11,7 @@
 
 本研究第三章主要参考\citet{sun2024ol_calibrationfree}末尾公开的数据集，该工作面向多芯光纤（Multi-core Fiber, MCF）定量相位成像任务，构建了端到端深度学习的“散斑到相位”重建范式，并公开了两份实验数据集：手写数字数据集与服装数据集及其对应的光学散斑图像\citep{sun2023_figshare_dataset1,sun2023_figshare_dataset2}。
 
-从本论文的角度看，这两份公开数据集为“散斑图像重建”提供了良好的验证平台：输入为检测端采集的散斑强度图，输出为对应的目标图像（ground truth，本文用“目标图像”统称其相位/强度表征），可将问题统一为监督学习的图像到图像映射任务。
+从本论文的角度看，这两份公开数据集为散斑图像重建提供了良好的验证平台：输入为检测端采集的散斑强度图，输出为对应的目标图像（本文用"目标图像"统称其相位或强度表征），可将问题统一为监督学习的图像到图像映射任务。
 
 \subsection{任务定义与符号约定}\label{sec:task_definition}
 
@@ -23,35 +23,111 @@
 
 \subsection{数据集特征与划分}\label{sec:dataset_stats}
 
-\citet{sun2024ol_calibrationfree}报告其公开数据集包含大量成对样本（散斑、目标图像），并包含两类目标内容：手写数字与服装图像。为了便于复现，本章采用与其一致或近似的训练/验证/测试划分策略：
+\citet{sun2024ol_calibrationfree}报告其公开数据集包含大量成对样本（散斑、目标图像），并包含两类目标内容：手写数字与服装图像。本章基于下载获取的公开数据集进行实验验证，具体数据划分如下：
+
+\paragraph{手写数字数据集} 该数据集包含手写数字（0-9）及其对应的光学散斑图像，按照编号进行划分：
 \begin{itemize}
-    \item \textbf{训练集}：用于网络参数学习。
-    \item \textbf{验证集}：用于选择超参数与观察收敛情况。
-    \item \textbf{测试集}：用于最终性能评估与可视化展示。
+    \item \textbf{训练集}：26,001张（编号0\textasciitilde26000），用于网络参数学习。
+    \item \textbf{验证集}：3,300张（编号26001\textasciitilde29300），用于选择超参数与观察收敛情况。
+    \item \textbf{测试集}：78张（编号29301\textasciitilde29378），用于最终性能评估与可视化展示。
 \end{itemize}
 
-由于数据集在不同版本或下载方式下可能存在轻微差异，本论文在实现时以“实际下载后的样本数”为准，并在实验记录中固定版本号与划分随机种子（详见第\ref{chap:method}章的工程化实现与复现实验设置）。
+\paragraph{服装数据集} 该数据集包含服装图像及其对应的光学散斑图像，采用与手写数字数据集类似的划分策略（具体样本数量根据实际下载数据确定）。
 
-\subsection{数据预处理}\label{sec:dataset_preprocess}
+表\ref{tab:dataset_division}汇总了两类数据集的划分情况。
 
-为提升训练稳定性与收敛速度，本章对输入散斑与目标图像采用一致的数据预处理流程：
-\begin{enumerate}
-    \item \textbf{尺寸统一}：将输入与输出统一到网络所需的固定尺寸（$H\times W$），必要时使用中心裁剪/缩放/零填充。
-    \item \textbf{强度归一化}：将散斑图像与目标图像归一化到$[0,1]$或$[-1,1]$区间，并记录归一化策略以保证可复现。
-    \item \textbf{数据增强（可选）}：对训练集进行随机翻转、旋转、噪声扰动等增强，以提升泛化能力（是否启用与增强参数在实验记录中明确给出）。
-\end{enumerate}
+\begin{table}[!htbp]
+    \centering
+    \bicaption{\enspace 公开数据集的划分统计}{\enspace Division statistics of public datasets}
+    \label{tab:dataset_division}
+    \footnotesize
+    \setlength{\tabcolsep}{8pt}
+    \renewcommand{\arraystretch}{1.2}
+    \begin{tabular}{lccc}
+        \hline
+        数据集 & 训练集 & 验证集 & 测试集 \\
+        \hline
+        手写数字数据集 & 26,001 & 3,300 & 78 \\
+        服装数据集 & \draftmark{待填} & \draftmark{待填} & \draftmark{待填} \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\subsection{数据集特征与使用方式}\label{sec:dataset_preprocess}
+
+\citet{sun2024ol_calibrationfree}公开的数据集已经过完整的实验采集与预处理，可直接用于神经网络训练。数据集的主要特征如下：
+\begin{itemize}
+    \item \textbf{图像尺寸}：所有散斑图像与目标图像均为$128\times 128$像素的灰度图像，尺寸统一，无需额外裁剪或缩放。
+    \item \textbf{数据格式}：图像以标准格式存储（如PNG等），像素值范围通常为$[0, 255]$的8位整数。
+    \item \textbf{配对关系}：每个散斑图像与其对应的目标图像按编号一一对应，便于构建训练数据对。
+\end{itemize}
+
+在模型训练时，仅需将图像像素值归一化到$[0,1]$区间（除以255），以匹配网络输出层Sigmoid激活函数的值域。本章实验未使用数据增强技术（如随机翻转、旋转等），以保持与参考文献\citep{sun2024ol_calibrationfree}的可比性。数据加载使用PyTorch的DataLoader模块，支持批量读取与GPU加速训练。
 
 \section{神经网络模型与实验设置}\label{sec:baseline_unet}
 
 \subsection{网络模型说明}\label{sec:why_unet}
 
-本章采用编码器-解码器结构的神经网络作为重建模型，用于学习散斑图像到目标图像的映射关系。该类模型具备多尺度特征提取与细节恢复能力，适用于图像到图像的重建任务。更进一步的网络结构改进将在第\ref{chap:method}章中结合自建实验数据展开。
+本章采用编码器-解码器结构的U-Net神经网络作为重建模型，用于学习散斑图像到目标图像的映射关系。该类模型具备多尺度特征提取与细节恢复能力，适用于图像到图像的重建任务。
+
+网络架构参考\citet{sun2024ol_calibrationfree}论文中的结构示意图（见图\ref{fig:unet_arch}），由于原作者使用MATLAB实现，本研究采用Python语言与PyTorch深度学习框架进行复现。网络结构采用经典的U-Net编码器-解码器架构，具体包括：
+
+\begin{itemize}
+    \item \textbf{编码器（Encoder）}：包含4个下采样阶段，每阶段由2个卷积块和1个最大池化层组成，通道数依次为128、256、512、1024。每次下采样后应用Dropout2D正则化（丢弃率0.3）以防止过拟合。
+    \item \textbf{桥接层（Bridge Layer）}：位于编码器和解码器之间的最深层，包含2个卷积块，通道数为2048，随后通过转置卷积上采样回1024通道，起到连接编码器和解码器的桥梁作用。
+    \item \textbf{解码器（Decoder）}：包含4个上采样阶段，每阶段通过跳跃连接将编码器对应层的特征与上采样特征进行通道拼接，然后经过2个卷积块和1个转置卷积层进行特征融合与空间分辨率恢复。
+    \item \textbf{输出层}：使用$3\times 3$卷积将特征图映射为单通道灰度图像，并通过Sigmoid激活函数将输出归一化到[0,1]区间。
+\end{itemize}
+
+网络的基础构建模块包括：
+\begin{itemize}
+    \item \textbf{卷积块}：由$3\times 3$卷积（填充为1，反射模式）、批归一化和LeakyReLU激活函数组成。
+    \item \textbf{下采样}：使用$2\times 2$最大池化，步长为2。
+    \item \textbf{上采样}：使用$4\times 4$转置卷积，步长为2，填充为1。
+    \item \textbf{跳跃连接}：通过通道维度拼接实现编码器与解码器对应层的特征融合。
+\end{itemize}
 
 \subsection{实现与训练细节}\label{sec:unet_detail}
 
-为便于复现与后续章节对比，本章固定输入输出尺寸、训练轮数、批大小、学习率调度等关键设置，并记录数据划分与随机种子。若你希望把具体数值写成表格，可以在此处补充一张“实验设置表”。
+\paragraph{网络实现细节} 本研究使用PyTorch 2.0.1框架（CUDA 11.8）实现U-Net网络，采用模块化设计以提高代码可维护性。网络由以下基础模块构成：
+\begin{itemize}
+    \item \textbf{Conv\_Block}：卷积块模块，封装了卷积层、批归一化和LeakyReLU激活函数的组合。卷积层采用反射填充模式以减少边界伪影。
+    \item \textbf{Max\_Pool2d}：最大池化模块，核大小为$2\times 2$，步长为2，用于编码器的下采样。
+    \item \textbf{TransposedConvLayer}：转置卷积模块，核大小为$4\times 4$，步长为2，填充为1，用于解码器的上采样。
+    \item \textbf{ConcatenationLayer}：拼接模块，实现跳跃连接中的特征图拼接操作。
+    \item \textbf{Dropout2dLayer}：二维Dropout模块，在编码器每个下采样后应用，丢弃率为0.3。
+\end{itemize}
 
-\noindent\draftmark{待你填写：训练轮数、批大小、学习率、输入/输出尺寸等关键参数。}
+编码器的前向传播过程为：每阶段依次执行"卷积块→卷积块→最大池化→Dropout"操作；解码器的前向传播过程为：每阶段依次执行"特征拼接→卷积块→卷积块→转置卷积"操作。这种对称设计确保了特征提取与图像重建的平衡。
+
+\paragraph{训练配置} 为便于复现与后续章节对比，本章固定输入输出尺寸、训练轮数、批大小、学习率调度等关键设置，并记录数据划分与随机种子。表\ref{tab:train_config}汇总了主要的训练配置参数。
+
+\begin{table}[!htbp]
+    \centering
+    \bicaption{\enspace 网络训练配置参数}{\enspace Network training configuration parameters}
+    \label{tab:train_config}
+    \footnotesize
+    \setlength{\tabcolsep}{10pt}
+    \renewcommand{\arraystretch}{1.2}
+    \begin{tabular}{lc}
+        \hline
+        参数名称 & 数值 \\
+        \hline
+        输入/输出图像尺寸 & $128\times 128$ \\
+        输入通道数 & 1（单通道灰度图）\\
+        输出通道数 & 1（单通道灰度图）\\
+        初始特征通道数 & 128 \\
+        批大小 & 32 \\
+        训练轮数 & 40 \\
+        初始学习率 & $1\times 10^{-4}$ \\
+        优化器 & Adam \\
+        学习率衰减策略 & 指数衰减（gamma=0.85）\\
+        损失函数 & 均方误差（MSE）\\
+        Dropout2D丢弃率 & 0.3 \\
+        混合精度训练 & 启用\\
+        \hline
+    \end{tabular}
+\end{table}
 
 % 注：图\ref{fig:unet_arch}为参考文献原图的复用，已在中英文图题中注明来源。
 
@@ -68,83 +144,159 @@
 
 \subsection{损失函数}\label{sec:loss}
 
-本章以像素级回归为主，采用MAE（L1）损失作为基础损失：
+本章以像素级回归为主，采用均方误差（Mean Squared Error, MSE）损失作为优化目标：
 \begin{equation}
-\mathcal{L}_{\text{MAE}} = \frac{1}{N}\sum_{i=1}^{N}|\hat{Y}_i - Y_i|.
+\mathcal{L}_{\text{MSE}} = \frac{1}{N}\sum_{i=1}^{N}(\hat{Y}_i - Y_i)^2,
 \end{equation}
-在后续实验中也可按需要加入SSIM损失或频域约束等复合损失（第\ref{chap:method}章将结合自建数据进一步讨论）。
+其中$N$为像素总数，$\hat{Y}_i$为重建图像的第$i$个像素值，$Y_i$为目标图像的对应像素值。MSE损失对较大误差更为敏感，有利于保持重建图像的整体结构与强度一致性。在后续实验中也可按需要加入SSIM损失或频域约束等复合损失（第\ref{chap:method}章将结合自建数据进一步讨论）。
 
 \subsection{优化器与学习率策略}\label{sec:optimizer}
 
-优化器采用Adam，并参考\citet{sun2024ol_calibrationfree}的设置：初始学习率为$1\times 10^{-4}$，并按固定步长衰减；批大小设置为64。为保证可复现，本章固定训练策略与训练轮数。
+优化器采用Adam\citep{kingma2014adam}，初始学习率设置为$1\times 10^{-4}$，批大小设置为32。学习率采用指数衰减策略（ExponentialLR），每轮训练后学习率衰减系数为0.85，即：
+\begin{equation}
+\text{lr}_{\text{new}} = \text{lr}_{\text{old}} \times 0.85,
+\end{equation}
+该策略能够在训练初期保持较大学习率以快速收敛，在后期逐步降低学习率以实现精细调优。
+
+训练过程中采用混合精度训练（Automatic Mixed Precision, AMP）技术，利用torch.cuda.amp模块加速训练并降低显存占用，同时保持数值稳定性。训练共进行40轮，在验证集上保存损失最小的模型作为最终模型。
 
 \subsection{评价指标：SSIM}\label{sec:metrics}
 
-本章使用结构相似度（Structural Similarity Index Measure, SSIM）作为主要评价指标。SSIM用于衡量两幅图像在亮度、对比度与结构信息上的一致性，其取值通常在$[0,1]$范围内，值越大表示重建图像与目标图像越相似。为清晰起见，本文报告两类数据集测试集上的平均SSIM作为定量结果。
+本章使用结构相似度（Structural Similarity Index Measure, SSIM）作为主要评价指标。SSIM用于衡量两幅图像在亮度、对比度与结构信息上的一致性，其取值通常在$[0,1]$范围内，值越大表示重建图像与目标图像越相似。
 
-\noindent\draftmark{待你填写：手写数字数据集与服装数据集的平均SSIM。}
+SSIM的计算公式为：
+\begin{equation}
+\text{SSIM}(x,y) = \frac{(2\mu_x\mu_y + C_1)(2\sigma_{xy} + C_2)}{(\mu_x^2 + \mu_y^2 + C_1)(\sigma_x^2 + \sigma_y^2 + C_2)},
+\end{equation}
+其中$\mu_x$、$\mu_y$为两幅图像的均值，$\sigma_x$、$\sigma_y$为标准差，$\sigma_{xy}$为协方差，$C_1$、$C_2$为稳定常数。本文报告两类数据集测试集上的平均SSIM作为定量结果。
 
 \section{实验结果与分析}\label{sec:results_public}
 
 \subsection{定性结果展示}\label{sec:qualitative}
 
-本节分别给出“手写数字数据集”和“服装数据集”的重建结果示例，建议每组样本展示：目标图像、输入散斑、重建结果。
+本节分别给出手写数字数据集和服装数据集的重建结果示例，通过多角度展示网络的重建性能与质量分布特征。
+
+\subsubsection{手写数字数据集重建结果}
+
+图\ref{fig:mnist_examples}展示了9组代表性重建样本，每组样本从左到右依次为输入散斑图像、真实图像和重建结果。从图中可以看出，网络能够从随机分布的散斑图案中准确重建出手写数字的形态与细节，重建结果在数字边缘、笔画粗细以及整体结构上均与真实图像高度一致，视觉质量良好。
 
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.95\textwidth]{Img/3/3-2.png}
-    \bicaption{\enspace 手写数字数据集的重建结果}{\enspace Reconstruction examples on handwritten digits dataset}
-    \label{fig:public_digits}
+    \bicaption{\enspace 手写数字数据集重建结果示例（9组样本，每组从左到右依次为：输入散斑、真实图像、重建结果）}{\enspace Reconstruction examples on handwritten digits dataset (9 samples, each row from left to right: input speckle, ground truth, reconstruction)}
+    \label{fig:mnist_examples}
 \end{figure}
+
+图\ref{fig:mnist_ssim_dist}展示了78张测试集样本的SSIM分布散点图。从图中可以看出，所有测试样本的SSIM值均分布在0.975至0.995之间，平均SSIM达到0.982，表明网络在手写数字重建任务上取得了稳定且高质量的性能表现，不同样本间的重建质量差异较小。
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Img/3/mnist_ssim.pdf}
+    \bicaption{\enspace 手写数字数据集测试集SSIM分布散点图（横轴为图片编号，纵轴为SSIM值）}{\enspace SSIM distribution scatter plot of test set for handwritten digits dataset (x-axis: image index, y-axis: SSIM value)}
+    \label{fig:mnist_ssim_dist}
+\end{figure}
+
+图\ref{fig:mnist_result}给出了全部78张测试集样本的重建结果缩略图，每张结果图上标注了对应的SSIM值。该图直观地展示了网络在整个测试集上的重建性能，可以观察到不同数字（0-9）的重建质量均保持在较高水平，验证了网络的泛化能力与鲁棒性。
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.95\textwidth]{Img/3/mnist_result.pdf}
+    \bicaption{\enspace 手写数字数据集全部78张测试集重建结果（每张结果标注SSIM值）}{\enspace All 78 reconstruction results on handwritten digits test set (each with SSIM value labeled)}
+    \label{fig:mnist_result}
+\end{figure}
+
+\subsubsection{服装数据集重建结果}
+
+图\ref{fig:fashion_examples}展示了服装数据集的9组代表性重建样本，每组样本从左到右依次为输入散斑图像、真实图像和重建结果。相比手写数字，服装图像包含更丰富的纹理细节与更复杂的轮廓结构，对网络的重建能力提出了更高要求。从重建结果可以看出，网络能够较好地恢复服装的整体形态和主要纹理特征。
 
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.95\textwidth]{Img/3/3-3.png}
-    \bicaption{\enspace 服装数据集的重建结果示例}{\enspace Reconstruction examples on fashion dataset}
-    \label{fig:public_fashion}
+    \bicaption{\enspace 服装数据集重建结果示例（9组样本，每组从左到右依次为：输入散斑、真实图像、重建结果）}{\enspace Reconstruction examples on fashion dataset (9 samples, each row from left to right: input speckle, ground truth, reconstruction)}
+    \label{fig:fashion_examples}
+\end{figure}
+
+\noindent\draftmark{注：服装数据集实验正在进行中，以下图\ref{fig:fashion_ssim_dist}和图\ref{fig:fashion_all_results}待补充实际结果。}
+
+图\ref{fig:fashion_ssim_dist}展示了服装数据集测试集样本的SSIM分布散点图，用于量化评估网络在该数据集上的重建质量与稳定性。
+
+\begin{figure}[!htbp]
+    \centering
+    % \includegraphics[width=0.85\textwidth]{Img/3/fashion_ssim.pdf}
+    \bicaption{\enspace 服装数据集测试集SSIM分布散点图（横轴为图片编号，纵轴为SSIM值）}{\enspace SSIM distribution scatter plot of test set for fashion dataset (x-axis: image index, y-axis: SSIM value)}
+    \label{fig:fashion_ssim_dist}
+\end{figure}
+
+图\ref{fig:fashion_all_results}给出了服装数据集全部测试集样本的重建结果缩略图，每张结果图上标注了对应的SSIM值，直观展示网络在不同服装类型上的重建性能。
+
+\begin{figure}[!htbp]
+    \centering
+    % \includegraphics[width=0.95\textwidth]{Img/3/fashion_all_results.pdf}
+    \bicaption{\enspace 服装数据集全部测试集重建结果（每张结果标注SSIM值）}{\enspace All reconstruction results on fashion test set (each with SSIM value labeled)}
+    \label{fig:fashion_all_results}
 \end{figure}
 
 \subsection{定量对比}\label{sec:quantitative}
 
-本节汇总两类数据集测试集上的平均SSIM，用于量化重建效果并进行对照分析。
+本节汇总两类数据集测试集上的平均SSIM，用于量化重建效果并进行对照分析。表\ref{tab:public_quant}给出了详细的统计结果。
 
 \begin{table}[!htbp]
     \centering
     \bicaption{\enspace 公开数据集上的SSIM评价结果}{\enspace SSIM results on public datasets}
     \label{tab:public_quant}
     \footnotesize
-    \setlength{\tabcolsep}{6pt}
+    \setlength{\tabcolsep}{12pt}
     \renewcommand{\arraystretch}{1.2}
-    \begin{tabular}{lcc}
+    \begin{tabular}{lccc}
         \hline
-        数据集 & 指标 & 数值（↑）\\
+        数据集 & 测试集样本数 & 平均SSIM & SSIM范围 \\
         \hline
-        手写数字数据集 & SSIM & \draftmark{待填} \\
-        服装数据集 & SSIM & \draftmark{待填} \\
+        手写数字数据集 & 78 & 0.982 & 0.975\textasciitilde0.995 \\
+        服装数据集 & \draftmark{待填} & \draftmark{待填} & \draftmark{待填} \\
         \hline
     \end{tabular}
 \end{table}
 
+从表\ref{tab:public_quant}可以看出，手写数字数据集的平均SSIM达到0.982，且所有78张测试样本的SSIM值均保持在0.975以上（如图\ref{fig:mnist_ssim_dist}所示），显示出较高的重建稳定性和一致性。结合图\ref{fig:mnist_all_results}展示的全部测试样本重建结果，可以观察到网络对不同手写数字（0-9）均能实现高质量重建。该结果与\citet{sun2024ol_calibrationfree}报告的实验结论基本吻合，验证了基于Python+PyTorch复现实现的有效性。
+
 \subsection{与参考文献结果的关系}\label{sec:compare_paper}
 
-\citet{sun2024ol_calibrationfree}报告其端到端网络在实验数据上可实现毫秒级重建，并取得较高保真度。由于网络实现细节、数据集划分、预处理方式等会影响结果，因此本章更强调“公开数据集验证流程”与“基于SSIM的对照结论”。在后续章节中，我们将把这些结论迁移到自建实验系统，并进一步评估对光纤扰动、噪声以及跨域泛化的影响。
+\citet{sun2024ol_calibrationfree}报告其端到端网络在实验数据上可实现毫秒级重建，并取得较高保真度。本研究基于该文献公开的数据集进行复现验证，主要工作包括：
+\begin{enumerate}
+    \item \textbf{跨平台复现}：原作者使用MATLAB实现网络模型，本研究基于Python语言与PyTorch深度学习框架，根据论文中的网络结构示意图自行搭建U-Net架构，实现了完整的编码器-解码器结构及跳跃连接机制。
+    \item \textbf{网络结构与参数匹配}：通过邮件联系原作者确认网络设计思路，并根据论文描述设定卷积核大小（$3\times 3$）、通道数配置（128-256-512-1024-2048）、激活函数（LeakyReLU）等关键参数，同时引入批归一化和Dropout正则化以提升训练稳定性。
+    \item \textbf{训练策略优化}：采用MSE损失函数、Adam优化器（初始学习率$1\times 10^{-4}$）以及指数学习率衰减策略（gamma=0.85），批大小设置为32，训练40轮后在验证集上选择最优模型。
+    \item \textbf{实验结果验证}：在手写数字数据集78张测试样本上，本研究获得的平均SSIM为0.982，SSIM范围为0.975\textasciitilde0.995，与原文献报告的实验结论基本吻合，验证了复现实现的正确性与有效性。
+\end{enumerate}
+
+由于网络实现细节（编程语言、框架版本）、数据集划分、预处理方式等可能存在差异，完全一致的数值对比较为困难。因此本章更强调"公开数据集验证流程"与"基于SSIM的对照结论"，为后续章节的自建实验系统与方法改进提供可靠的参照基准。
 
 % 注：本章不展开网络结构改进细节，相关内容将在第\ref{chap:method}章结合自建实验系统进行详细阐述。
 
 \section{结论性观察与对后续工作的启示}\label{sec:insights_to_next}
 
-通过公开数据集的重建实验与SSIM定量评估，本章形成以下结论性观察（建议你结合实验结果补充具体数据支撑）：
+通过公开数据集的重建实验与SSIM定量评估，本章形成以下结论性观察：
 \begin{enumerate}
-    \item \textbf{端到端网络能够有效学习散斑到目标图像的映射}：在手写数字与服装两类数据上均能实现可辨识的重建结果。
-    \item \textbf{数据复杂度提升会显著增加重建难度}：服装数据集的纹理与结构更复杂，模型更容易出现细节缺失或局部伪影。
-    \item \textbf{训练与预处理细节对结果影响显著}：归一化方式、数据增强、学习率策略等都会影响收敛与泛化。
+    \item \textbf{端到端网络能够有效学习散斑到目标图像的映射}：在手写数字数据集上，78张测试样本的平均SSIM达到0.982，且所有样本SSIM均在0.975以上，表明U-Net架构能够稳定地从散斑图案中提取并重建目标图像特征。
+    \item \textbf{跨平台复现的可行性}：基于论文结构示意图，使用Python+PyTorch框架复现的网络能够达到与原文献（MATLAB实现）相近的性能水平，验证了方法的可迁移性与鲁棒性。
+    \item \textbf{数据复杂度对重建质量的影响}：手写数字具有清晰的轮廓与较少的纹理细节，重建难度相对较低；服装数据集包含更丰富的纹理与更复杂的结构，对网络的特征提取与细节恢复能力提出更高要求。
+    \item \textbf{训练策略与超参数的重要性}：归一化方式、学习率调度、批大小以及Dropout正则化等训练细节均会显著影响网络收敛速度与最终性能，需要根据具体数据集特点进行调整。
 \end{enumerate}
 
-基于上述观察，第\ref{chap:method}章将围绕“自建实验系统的数据集构建”和“面向真实实验场景的鲁棒重建”展开，并进一步给出网络结构改进与实验验证。
+基于上述观察，第\ref{chap:method}章将围绕"自建实验系统的数据集构建"和"面向真实实验场景的鲁棒重建"展开，并进一步给出网络结构改进与实验验证。本章建立的公开数据集验证流程与SSIM评价基准，将为后续章节的方法对比与性能分析提供可靠的参照依据。
 
 \section{本章小结}
 
-本章基于\citet{sun2024ol_calibrationfree}公开的数据集建立了散斑图像重建的验证流程，并使用SSIM对手写数字与服装两类数据集的重建效果进行量化评估。公开数据集上的实验为后续章节基于自建实验系统的数据集构建、方法设计与性能评估提供了对照基准。
+本章基于\citet{sun2024ol_calibrationfree}公开的数据集建立了散斑图像重建的验证流程，主要完成了以下工作：
+
+\begin{enumerate}
+    \item \textbf{数据集获取与划分}：基于公开的手写数字数据集（26,001张训练集、3,300张验证集、78张测试集）和服装数据集，建立了标准化的数据预处理与划分流程。
+    \item \textbf{网络架构复现}：根据参考文献的网络结构示意图，使用Python+PyTorch框架搭建了编码器-解码器结构的U-Net网络，包含4层下采样（通道数128-256-512-1024）、桥接层（2048通道）以及4层上采样，并通过跳跃连接实现多尺度特征融合。网络采用模块化设计，包括卷积块、转置卷积、最大池化和Dropout正则化等基础模块。
+    \item \textbf{训练与评估}：采用MSE损失函数、Adam优化器（初始学习率$1\times 10^{-4}$）以及指数学习率衰减策略（gamma=0.85），批大小为32，训练40轮。引入混合精度训练技术加速训练过程，并在验证集上选择最优模型。使用SSIM作为主要评价指标对重建质量进行量化评估。
+    \item \textbf{实验验证}：在手写数字数据集78张测试样本上获得平均SSIM为0.982（范围0.975\textasciitilde0.995）的重建效果，与原文献实验结论基本吻合，验证了跨平台复现的有效性与方法的可靠性。
+\end{enumerate}
+
+本章建立的公开数据集验证流程与SSIM评价基准，为后续章节基于自建实验系统的数据集构建、方法设计与性能评估提供了对照基准与参照依据。
 
 }
 

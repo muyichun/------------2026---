@@ -779,81 +779,82 @@ lr_{\text{epoch}} = lr_{\text{init}} \times \gamma^{\text{epoch}},
 
 \subsubsection{基于全息标签的聚类（MNIST数据集）}
 
-图\ref{fig:mnist_umap_hologram}和图\ref{fig:mnist_tsne_hologram}分别展示了MNIST数据集在UMAP和t-SNE降维后，25个全息标签在三种偏振态下的聚类情况。
+为了表征全息标签和偏振复用引起的编码变异性，我们首先通过25个不同的全息标签在三种偏振态（s偏振、p偏振和混合偏振s+p）下传输了包含2,000张MNIST手写数字图像（64×64像素）的数据集，每种偏振条件下共获得50,000个散斑图案。每个全息标签唯一对应光纤近端面的特定入射角，从而激发多模光纤内不同的模式组合。给定光纤参数（芯径：100 $\mu$m，数值孔径：0.22）和照明波长（532 nm），该光纤支持约8,439个空间模式，足以容纳4,096像素的MNIST图像。
 
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.95\textwidth]{Img/4/mnist-umap-hologram.pdf}
-    \bicaption{\enspace MNIST数据集的UMAP降维聚类（按全息标签着色）。(a) s偏振；(b) p偏振；(c) 混合偏振s+p。每种偏振态下，50,000张散斑图（2,000张图像×25个全息标签）按25个全息标签着色，形成25个清晰可分的聚类簇。不同颜色代表不同的全息标签编号（1-25）。}{\enspace UMAP clustering of MNIST speckle patterns colored by holographic label. (a) s-polarization; (b) p-polarization; (c) mixed s+p polarization. For each polarization state, 50,000 speckle patterns (2,000 images × 25 holographic labels) form 25 distinct clusters (colored 1-25).}
+    \bicaption{\enspace MNIST数据集散斑图的全息标签聚类分析（UMAP降维）。(a) s偏振；(b) p偏振；(c) 混合偏振s+p。}{\enspace UMAP clustering analysis of MNIST speckle patterns by holographic label. (a) s-polarization; (b) p-polarization; (c) mixed s+p polarization.}
     \label{fig:mnist_umap_hologram}
 \end{figure}
+
+为了可视化和量化散斑图案在不同全息标签和偏振态下的编码差异，我们采用了均匀流形近似与投影（UMAP）降维方法。UMAP利用流形学习和拓扑数据分析原理，特别适合捕获多模光纤散斑数据中固有的复杂非线性关系。如图\ref{fig:mnist_umap_hologram}(a-c)所示，UMAP分析清楚地揭示了散斑图案的结构化聚类，形成25个不同的簇，分别对应各自的全息标签。这种聚类模式在所有偏振条件下均保持一致且定义明确，证实了与每个全息标签相关的独特角度模式激发。
+
+为了提供补充视角，我们进一步使用基于概率的t分布随机邻域嵌入（t-SNE）方法进行分析。考虑到数据集规模较大，我们采用了计算效率更高的Barnes-Hut近似算法。如图\ref{fig:mnist_tsne_hologram}(d-f)所示，t-SNE投影呈现出更加明显的分离，突显出每个主要全息标签簇内清晰而独特的子簇结构。
 
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.95\textwidth]{Img/4/mnist-tsne-hologram.pdf}
-    \bicaption{\enspace MNIST数据集的t-SNE降维聚类（按全息标签着色）。(d) s偏振；(e) p偏振；(f) 混合偏振s+p。t-SNE投影展现出更加紧凑和分离的聚类结构，每个全息标签对应的散斑图形成明显的子簇。}{\enspace t-SNE clustering of MNIST speckle patterns colored by holographic label. (d) s-polarization; (e) p-polarization; (f) mixed s+p polarization. t-SNE reveals more compact and separated cluster structures with distinct sub-clusters for each holographic label.}
+    \bicaption{\enspace MNIST数据集散斑图的全息标签聚类分析（t-SNE降维）。(d) s偏振；(e) p偏振；(f) 混合偏振s+p。}{\enspace t-SNE clustering analysis of MNIST speckle patterns by holographic label. (d) s-polarization; (e) p-polarization; (f) mixed s+p polarization.}
     \label{fig:mnist_tsne_hologram}
 \end{figure}
 
-\textbf{重要发现}：
-\begin{enumerate}
-    \item \textbf{清晰的聚类结构}：如图\ref{fig:mnist_umap_hologram}和图\ref{fig:mnist_tsne_hologram}所示，25个全息标签对应的散斑图在降维空间中形成了\textbf{25个清晰且可分离的聚类簇}，这一结构在三种偏振态下均保持一致。
-    
-    \item \textbf{全息编码的有效性}：不同全息标签对应不同的入射角度，激发不同的光纤模式组合，从而在远场产生具有不同统计特性的散斑图案。聚类分析直观验证了全息编码的物理有效性。
-    
-    \item \textbf{强相关性}：同一全息标签下的散斑图（对应2,000张不同的目标图像）聚集在一起，表明全息标签对散斑图案的影响远大于目标图像内容的影响。这为基于全息标签的多路复用和分类重建提供了基础。
-    
-    \item \textbf{偏振一致性}：三种偏振态下的聚类结构高度一致，表明全息编码的效果不受偏振态的影响。
-\end{enumerate}
+通过UMAP和t-SNE聚类分析，我们获得了以下重要发现：
+
+\textbf{（1）清晰的聚类结构}：25个全息标签对应的散斑图在降维空间中形成了25个清晰且可分离的聚类簇，这一结构在三种偏振态下均保持一致。每个聚类簇包含2,000个散斑图案，对应同一全息标签下不同的输入图像。
+
+\textbf{（2）全息编码的有效性}：不同全息标签对应不同的入射角度，激发不同的光纤模式组合，从而在远场产生具有不同统计特性的散斑图案。无监督聚类分析直观验证了全息编码的物理有效性和鲁棒性。
+
+\textbf{（3）标签主导的散斑特性}：同一全息标签下的散斑图（对应2,000张不同的目标图像）紧密聚集在一起，表明全息标签对散斑图案统计特性的影响远大于目标图像内容的影响。这一发现为基于全息标签的多路复用和分类重建提供了理论基础。
+
+\textbf{（4）偏振一致性}：三种偏振态下的聚类结构高度一致，表明全息编码的效果不受偏振态的影响，证明了编码方案的稳定性。
+
+\textbf{（5）簇间可分性}：每个全息标签对应的聚类簇彼此明显分离，簇间几乎没有重叠，这表明不同全息标签激发的模式组合具有显著的统计差异性，为后续的监督学习重建提供了良好的基础。
 
 此外，图\ref{fig:mnist_correlation_matrix}展示了基于全息标签的散斑图相关性矩阵。
 
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.95\textwidth]{Img/4/mnist-correlation-matrix.pdf}
-    \bicaption{\enspace MNIST数据集的散斑图相关性矩阵（按全息标签分组）。(g) s偏振；(h) p偏振；(i) 混合偏振s+p。散斑图ID按全息标签顺序排列（每个标签2,000张，ID 0-1999对应标签1，ID 2000-3999对应标签2，依此类推）。对角线上的高相关性块表明同一全息标签下的散斑图具有强相关性，而不同标签之间的相关性极低。}{\enspace Correlation matrices of MNIST speckle patterns grouped by holographic labels. (g) s-polarization; (h) p-polarization; (i) mixed s+p polarization. Speckle IDs are sequentially indexed by holographic labels (2,000 patterns per label). High correlation blocks along the diagonal indicate strong intra-label correlations, while inter-label correlations remain minimal.}
+    \bicaption{\enspace MNIST数据集散斑图的相关性矩阵分析。(g) s偏振；(h) p偏振；(i) 混合偏振s+p。}{\enspace Correlation matrix analysis of MNIST speckle patterns. (a) s-polarization; (b) p-polarization; (c) mixed s+p polarization.}
     \label{fig:mnist_correlation_matrix}
 \end{figure}
 
-相关性矩阵进一步定量验证了聚类结果：同一全息标签下的散斑图具有高相关系数（对角线块），而不同标签之间的相关性接近零（非对角线区域），表明全息编码产生了高度可区分的散斑图案。
+为进一步定量验证全息标签编码的有效性，我们计算了获取散斑数据集的相关性矩阵，如图\ref{fig:mnist_correlation_matrix}(g-i)所示。在相关性矩阵中，散斑图ID按全息标签顺序进行排列，每个标签包含2,000个散斑图案（例如，ID 0-1,999对应第1个全息标签，ID 2,000-3,999对应第2个标签，依此类推，直至ID 48,000-49,999对应第25个标签）。
+
+相关性矩阵呈现出清晰的块状对角结构，表明相同全息标签产生的散斑图案具有显著的统计相关性。具体而言，对角线上的高亮方块对应于标签内部的强相关性，相关系数接近1，表明同一全息标签下的散斑图（尽管输入图像内容不同）保持高度一致的统计特性。相反，非对角线区域的相关系数接近零，表明不同全息标签之间的散斑图案几乎不相关。这种强烈的标签内高相关性与标签间低相关性的对比，从定量角度证实了每个全息标签编码通道的独特性和可区分性。该结果与前述UMAP和t-SNE聚类分析的定性观察完全一致，进一步验证了全息编码在多路复用传输中的有效性。值得注意的是，这一相关性结构在三种偏振态下均保持稳定，再次印证了全息编码的鲁棒性不受偏振态的影响。
 
 \subsubsection{基于偏振态的聚类（MNIST数据集）}
 
-为验证偏振编码的有效性，本文进一步分析了不同偏振态的散斑图聚类情况。图\ref{fig:mnist_polarization_clustering}展示了3,000张散斑图（每种偏振态1,000张）的UMAP和t-SNE聚类结果。
+为进一步阐明偏振编码的作用，我们从单一全息标签下提取了三种偏振态的散斑图进行分析。数据集包含2,000个散斑图案，分别在s偏振、p偏振和混合偏振（s+p）三种条件下采集，总计6,000个样本。采用UMAP和t-SNE降维方法对该数据集进行可视化分析。
 
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.85\textwidth]{Img/4/mnist-polarization-clustering.pdf}
-    \bicaption{\enspace MNIST数据集不同偏振态的聚类分析。(a) UMAP聚类；(b) t-SNE聚类。数据集包含3,000张散斑图：s偏振1,000张（红色）、p偏振1,000张（绿色）、混合偏振s+p 1,000张（蓝色）。两种降维方法均清晰展现出三个可分离的聚类簇，验证了偏振编码的有效性。}{\enspace Clustering analysis of MNIST speckle patterns under different polarization states. (a) UMAP clustering; (b) t-SNE clustering. Dataset contains 3,000 speckle patterns: 1,000 s-pol (red), 1,000 p-pol (green), 1,000 mixed s+p (blue). Both dimensionality reduction methods reveal three distinct clusters, validating the effectiveness of polarization encoding.}
+    \bicaption{\enspace MNIST数据集不同偏振态的聚类分析。(a) UMAP降维；(b) t-SNE降维。}{\enspace Clustering analysis of MNIST speckle patterns by polarization state. (a) UMAP; (b) t-SNE.}
     \label{fig:mnist_polarization_clustering}
 \end{figure}
 
-\textbf{重要发现}：
-\begin{enumerate}
-    \item \textbf{偏振编码的有效性}：如图\ref{fig:mnist_polarization_clustering}所示，三种偏振态的散斑图形成了\textbf{三个清晰可分的聚类簇}，表明偏振编码显著改变了散斑的统计特性。
-    
-    \item \textbf{偏振维度的独立性}：偏振编码提供了与全息编码正交的信息维度，两者可以独立组合实现多路复用。
-\end{enumerate}
+如图\ref{fig:mnist_polarization_clustering}(a,b)所示，两种降维方法均清晰地将数据分离为三个独立的聚类簇，分别对应s偏振（红色）、p偏振（绿色）和混合偏振s+p（蓝色）三种编码状态。这一结果直观验证了偏振编码对散斑图案统计特性的显著影响。尽管三组散斑图源自相同的全息标签（即相同的入射角度和模式激发），但不同的偏振态仍能产生足够的统计差异，使得三个偏振通道在降维空间中形成明显分离的簇结构。
+
+这一观察结果表明，偏振编码提供了与全息编码正交的独立信息维度。全息标签通过改变入射角度调控模式激发，而偏振编码通过控制电场振动方向引入额外的模式耦合差异。两种编码机制可以独立作用且互不干扰，为构建多维复用传输系统奠定了基础。值得注意的是，即使在相同全息标签下，不同偏振态的散斑图仍保持高度可区分性，这进一步证实了偏振编码作为独立复用维度的有效性和鲁棒性。
 
 \subsubsection{双编码的联合聚类（MNIST数据集）}
 
-为评估双编码的综合效果，本文将25个全息标签和2种偏振态（s偏振和p偏振）组合，形成$25 \times 2 = 50$个复合标签。图\ref{fig:mnist_dual_encoding}展示了联合聚类结果。
+为进一步验证双编码方案的综合有效性，我们构建了一个包含50,000个散斑图案的大规模数据集，将25个全息标签与s偏振和p偏振两种偏振态进行组合。具体而言，在s偏振条件下，25个全息标签各采集1,000个散斑图案（共25,000个）；在p偏振条件下，同样的25个全息标签各采集1,000个散斑图案（共25,000个）。因此，总共形成了$25 \times 2 = 50$个复合编码通道，每个通道包含1,000个样本。
 
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.85\textwidth]{Img/4/mnist-dual-encoding.pdf}
-    \bicaption{\enspace MNIST数据集双编码联合聚类。(c) UMAP投影；(d) t-SNE投影。数据集包含50,000张散斑图：s偏振下25个全息标签各1,000张（共25,000张）+ p偏振下25个全息标签各1,000张（共25,000张），形成50个复合标签。两种降维方法均清晰展现出50个可区分的聚类簇，验证了双编码方案的协同效应和可扩展性。}{\enspace Dual-encoding clustering of MNIST speckle patterns. (c) UMAP projection; (d) t-SNE projection. Dataset contains 50,000 patterns: 25 holographic labels × 1,000 patterns under s-pol (25,000 total) + 25 holographic labels × 1,000 patterns under p-pol (25,000 total), forming 50 composite labels. Both methods reveal 50 distinct clusters, validating the synergy and scalability of dual-encoding.}
+    \bicaption{\enspace MNIST数据集双编码联合聚类分析。(c) UMAP降维；(d) t-SNE降维。}{\enspace Dual-encoding clustering analysis of MNIST speckle patterns. (c) UMAP; (d) t-SNE.}
     \label{fig:mnist_dual_encoding}
 \end{figure}
 
-\textbf{重要发现}：
-\begin{enumerate}
-    \item \textbf{双编码的协同效应}：全息编码和偏振编码的组合产生了$25 \times 2 = 50$个可区分的聚类簇，验证了双编码方案的有效性和可扩展性。
-    
-    \item \textbf{多路复用潜力}：清晰的50簇结构表明，双编码方案可以实现至少50路（理论上75路，包含混合偏振）的并行信息传输和分类重建。
-    
-    \item \textbf{无监督可分性}：聚类分析完全基于无监督方法，不依赖于标签信息，表明散斑图本身携带了足够的编码信息，为无监督分类和解复用提供了可能。
-\end{enumerate}
+如图\ref{fig:mnist_dual_encoding}(c,d)所示，UMAP和t-SNE分析均清晰地揭示了50个明确可分的聚类簇，每个簇精确对应一个特定的全息标签-偏振态组合。这一结果从数据驱动的角度证实了双编码方案的协同效应：全息编码通过控制入射角度提供空间维度的模式调控，偏振编码通过控制偏振态提供偏振维度的模式调控，两种编码机制相互独立且可叠加作用，从而实现了$25 \times 2 = 50$个独立可区分的传输通道。
+
+值得强调的是，这50个聚类簇在降维空间中均表现出良好的簇间分离度和簇内紧凑性，表明每个复合编码通道产生的散斑图案具有独特且稳定的统计特征。该结果充分验证了双编码方案的可扩展性和鲁棒性。理论上，如果进一步纳入混合偏振态（s+p），系统可支持$25 \times 3 = 75$个复合通道，显著提升多模光纤的信息传输容量。
+
+特别值得注意的是，上述聚类分析完全基于无监督学习方法（UMAP和t-SNE），不依赖于任何标签信息或先验知识。算法仅根据散斑图案的统计相似性自动完成聚类，即可准确区分50个复合编码通道。这一发现表明，散斑图案本身已经内含了充分的编码信息，为实现无监督的信道分类、自动解复用以及盲源分离等高级应用提供了理论基础和实验依据。双编码方案不仅增强了系统的多路复用能力，还为智能化的信息解码提供了新的可能性。
 
 \subsubsection{Fashion-MNIST数据集的聚类分析}
 
@@ -865,21 +866,21 @@ lr_{\text{epoch}} = lr_{\text{init}} \times \gamma^{\text{epoch}},
 
 \begin{figure}[!htbp]
     \centering
-    % \includegraphics[width=0.95\textwidth]{Img/4/fashion-umap-hologram.png}
+    \includegraphics[width=0.95\textwidth]{Img/4/fashion-umap-hologram.pdf}
     \bicaption{\enspace Fashion-MNIST数据集的UMAP降维聚类（按全息标签着色）。(a) s偏振；(b) p偏振；(c) 混合偏振s+p。每种偏振态下，50,000张散斑图（2,000张服装图像×25个全息标签）按25个全息标签着色，形成25个清晰可分的聚类簇。聚类结构与MNIST数据集高度一致，验证了方法的泛化能力。}{\enspace UMAP clustering of Fashion-MNIST speckle patterns colored by holographic label. (a) s-polarization; (b) p-polarization; (c) mixed s+p polarization. For each polarization state, 50,000 speckle patterns (2,000 fashion images × 25 holographic labels) form 25 distinct clusters. The clustering structure is highly consistent with MNIST, validating the generalization capability.}
     \label{fig:fashion_umap_hologram}
 \end{figure}
 
 \begin{figure}[!htbp]
     \centering
-    % \includegraphics[width=0.95\textwidth]{Img/4/fashion-tsne-hologram.png}
+    \includegraphics[width=0.95\textwidth]{Img/4/fashion-tsne-hologram.pdf}
     \bicaption{\enspace Fashion-MNIST数据集的t-SNE降维聚类（按全息标签着色）。(a) s偏振；(b) p偏振；(c) 混合偏振s+p。t-SNE投影同样展现出25个紧凑且分离的聚类簇，与MNIST数据集的聚类结构相似。}{\enspace t-SNE clustering of Fashion-MNIST speckle patterns colored by holographic label. (a) s-polarization; (b) p-polarization; (c) mixed s+p polarization. t-SNE also reveals 25 compact and separated clusters, similar to MNIST clustering structure.}
     \label{fig:fashion_tsne_hologram}
 \end{figure}
 
 \begin{figure}[!htbp]
     \centering
-    % \includegraphics[width=0.95\textwidth]{Img/4/fashion-correlation-matrix.png}
+    \includegraphics[width=0.95\textwidth]{Img/4/fashion-correlation-matrix.pdf}
     \bicaption{\enspace Fashion-MNIST数据集的散斑图相关性矩阵（按全息标签分组）。(a) s偏振；(b) p偏振；(c) 混合偏振s+p。相关性矩阵展现出与MNIST数据集相同的块状对角结构，表明全息编码的有效性不依赖于图像内容的复杂度。}{\enspace Correlation matrices of Fashion-MNIST speckle patterns grouped by holographic labels. (a) s-polarization; (b) p-polarization; (c) mixed s+p polarization. The matrices show the same block-diagonal structure as MNIST, indicating that holographic encoding effectiveness is independent of image content complexity.}
     \label{fig:fashion_correlation_matrix}
 \end{figure}
@@ -890,7 +891,7 @@ lr_{\text{epoch}} = lr_{\text{init}} \times \gamma^{\text{epoch}},
 
 \begin{figure}[!htbp]
     \centering
-    % \includegraphics[width=0.85\textwidth]{Img/4/fashion-polarization-clustering.png}
+    \includegraphics[width=0.85\textwidth]{Img/4/fashion-polarization-clustering.pdf}
     \bicaption{\enspace Fashion-MNIST数据集不同偏振态的聚类分析。(a) UMAP聚类；(b) t-SNE聚类。数据集包含3,000张散斑图：s偏振1,000张（红色）、p偏振1,000张（绿色）、混合偏振s+p 1,000张（蓝色）。三个偏振态形成清晰可分的聚类簇，与MNIST数据集的结果一致。}{\enspace Clustering analysis of Fashion-MNIST speckle patterns under different polarization states. (a) UMAP clustering; (b) t-SNE clustering. Dataset contains 3,000 speckle patterns: 1,000 s-pol (red), 1,000 p-pol (green), 1,000 mixed s+p (blue). Three polarization states form distinct clusters, consistent with MNIST results.}
     \label{fig:fashion_polarization_clustering}
 \end{figure}
@@ -901,7 +902,7 @@ lr_{\text{epoch}} = lr_{\text{init}} \times \gamma^{\text{epoch}},
 
 \begin{figure}[!htbp]
     \centering
-    % \includegraphics[width=0.85\textwidth]{Img/4/fashion-dual-encoding.png}
+    \includegraphics[width=0.85\textwidth]{Img/4/fashion-dual-encoding.png}
     \bicaption{\enspace Fashion-MNIST数据集双编码联合聚类。(a) UMAP投影；(b) t-SNE投影。数据集包含50,000张散斑图：s偏振下25个全息标签各1,000张 + p偏振下25个全息标签各1,000张，形成50个复合标签。聚类结构与MNIST数据集高度一致，进一步验证了双编码方案的鲁棒性和泛化能力。}{\enspace Dual-encoding clustering of Fashion-MNIST speckle patterns. (a) UMAP projection; (b) t-SNE projection. Dataset contains 50,000 patterns: 25 holographic labels × 1,000 patterns under s-pol + 25 holographic labels × 1,000 patterns under p-pol, forming 50 composite labels. The clustering structure is highly consistent with MNIST, further validating the robustness and generalization of dual-encoding.}
     \label{fig:fashion_dual_encoding}
 \end{figure}

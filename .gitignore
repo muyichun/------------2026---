@@ -2,3 +2,6 @@
 /Img/*
 /Tmp/*
 /ref/*
+*.log
+*.out
+*.pdf

@@ -149,7 +149,7 @@
 
 \subsection{优化器与学习率策略}\label{sec:optimizer}
 
-优化器采用Adam\citep{kingma2014adam}，初始学习率设置为$1\times 10^{-4}$，批大小设置为32。学习率采用指数衰减策略（ExponentialLR），每轮训练后学习率衰减系数为0.85，即：
+优化器采用Adam\citep{adam2014method}，初始学习率设置为$1\times 10^{-4}$，批大小设置为32。学习率采用指数衰减策略（ExponentialLR），每轮训练后学习率衰减系数为0.85，即：
 \begin{equation}
 \text{lr}_{\text{new}} = \text{lr}_{\text{old}} \times 0.85,
 \end{equation}

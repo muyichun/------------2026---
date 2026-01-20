@@ -116,7 +116,15 @@ y = f\left(\sum_{i=1}^{n} w_i x_i + b\right)
 
 \subsection{卷积神经网络}
 
-卷积神经网络（Convolutional Neural Network, CNN）是专门用于处理网格状数据（如图像）的深度学习模型。CNN的核心思想是利用卷积操作提取图像的局部特征，通过多层卷积和池化操作，逐步提取从低级到高级的特征表示。
+卷积神经网络（Convolutional Neural Network, CNN）是专门用于处理网格状数据（如图像）的深度学习模型。CNN的核心思想是利用卷积操作提取图像的局部特征，通过多层卷积和池化操作，逐步提取从低级到高级的特征表示。如图\ref{fig:cnn}所示，典型的CNN架构由多个卷积层、池化层和全连接层组成，通过逐层特征提取和抽象，最终实现对图像的高层次理解。
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Img/2/cnn.png}
+    \bicaption{\enspace 卷积神经网络（CNN）结构示意图}
+              {\enspace Schematic diagram of Convolutional Neural Network (CNN) architecture}
+    \label{fig:cnn}
+\end{figure}
 
 \subsubsection{卷积层}
 

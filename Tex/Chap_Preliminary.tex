@@ -1,6 +1,6 @@
 % !TEX root = ../Thesis.tex
 
-\chapter{基于公开数据集的神经网络重建实验}\label{chap:preliminary}
+\chapter{基于公开多芯光纤散斑数据集的神经网络成像实验}\label{chap:preliminary}
 
 {
 本章围绕公开的“散斑—目标图像”配对数据集开展前期研究工作：基于\citet{sun2024ol_calibrationfree}公开的数据集，对神经网络重建方法进行验证实验，并通过结构相似度（SSIM）衡量手写数字数据集与服装数据集的重建效果。本章的目的在于建立公开数据集上的验证流程与对照基准，为第\ref{chap:method}章的自建实验系统与方法验证提供参照。
@@ -149,7 +149,7 @@
 
 \subsection{优化器与学习率策略}\label{sec:optimizer}
 
-优化器采用Adam\citep{adam2014method}，初始学习率设置为$1\times 10^{-4}$，批大小设置为32。学习率采用指数衰减策略（ExponentialLR），每轮训练后学习率衰减系数为0.85，即：
+优化器采用Adam\citep{kingma2014adam}，初始学习率设置为$1\times 10^{-4}$，批大小设置为32。学习率采用指数衰减策略（ExponentialLR），每轮训练后学习率衰减系数为0.85，即：
 \begin{equation}
 \text{lr}_{\text{new}} = \text{lr}_{\text{old}} \times 0.85,
 \end{equation}

@@ -9,9 +9,7 @@
 \renewcommand*{\addvspace}[1]{}
 \let\oldnumberline\numberline%
 \renewcommand{\numberline}{\figurename~\oldnumberline}%
-% 自动：输出图表目录，
-% \listoffigures 
-\input{Tmp/Thesis.lof}
+\listoffigures 
 \let\clearpage\relax  % Do nothing when a \clearpage command appears 
 \let\cleardoublepage\relax
 \renewcommand{\numberline}{\appfigname~\oldnumberline}%

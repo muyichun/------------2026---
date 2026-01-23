@@ -3,7 +3,7 @@
 \chapter{基于公开多芯光纤散斑数据集的神经网络成像实验}\label{chap:preliminary}
 
 {
-本章围绕公开的“散斑—目标图像”配对数据集开展前期研究工作：基于\citet{sun2024ol_calibrationfree}公开的数据集，对神经网络重建方法进行验证实验，并通过结构相似度（SSIM）衡量手写数字数据集与服装数据集的重建效果。本章的目的在于建立公开数据集上的验证流程与对照基准，为第\ref{chap:method}章的自建实验系统与方法验证提供参照。
+本章围绕公开的“散斑—目标图像”配对数据集开展前期研究工作，基于\citet{sun2024ol_calibrationfree}公开的数据集，对神经网络重建方法进行验证实验，并通过结构相似度（SSIM）衡量手写数字数据集与服装数据集的重建效果。本章的目的在于建立公开数据集上的验证流程与对照基准，为第\ref{chap:method}章的自建实验系统与方法验证提供参照。
 
 \section{公开数据集与任务定义}\label{sec:public_dataset}
 
@@ -11,7 +11,7 @@
 
 本研究第三章主要参考\citet{sun2024ol_calibrationfree}末尾公开的数据集，该工作面向多芯光纤（Multi-core Fiber, MCF）定量相位成像任务，构建了端到端深度学习的“散斑到相位”重建范式，并公开了两份实验数据集：手写数字数据集与服装数据集及其对应的光学散斑图像\citep{sun2023_figshare_dataset1,sun2023_figshare_dataset2}。
 
-从本论文的角度看，这两份公开数据集为散斑图像重建提供了良好的验证平台：输入为检测端采集的散斑强度图，输出为对应的目标图像（本文用"目标图像"统称其相位或强度表征），可将问题统一为监督学习的图像到图像映射任务。
+从本论文的角度看，这两份公开数据集为散斑图像重建提供了良好的验证平台：输入为检测端采集的散斑强度图，输出为对应的目标图像（本文用“目标图像”统称其相位或强度表征），可将问题统一为监督学习的图像到图像映射任务。
 
 \subsection{任务定义与符号约定}\label{sec:task_definition}
 
@@ -25,9 +25,9 @@
 
 \citet{sun2024ol_calibrationfree}报告其公开数据集包含大量成对样本（散斑、目标图像），并包含两类目标内容：手写数字与服装图像。本章基于下载获取的公开数据集进行实验验证，具体数据划分如下：
 
-\paragraph{手写数字数据集} 该数据集包含手写数字（0-9）及其对应的光学散斑图像，共计29,379张配对样本。按照编号进行划分：训练集26,001张（编号0\textasciitilde26000），用于网络参数学习；验证集3,300张（编号26001\textasciitilde29300），用于选择超参数与监控收敛过程；测试集78张（编号29301\textasciitilde29378），用于最终性能评估与可视化展示。
+(1) 手写数字数据集包含手写数字（0-9）及其对应的光学散斑图像，共计29,379张配对样本。按照编号进行划分：训练集26,001张（编号0\textasciitilde26000），用于网络参数学习；验证集3,300张（编号26001\textasciitilde29300），用于选择超参数与监控收敛过程；测试集78张（编号29301\textasciitilde29378），用于最终性能评估与可视化展示。
 
-\paragraph{服装数据集} 该数据集包含服装图像及其对应的光学散斑图像，共计20,797张配对样本。按照编号进行划分：训练集18,001张（编号0\textasciitilde18000），用于网络参数学习；验证集2,700张（编号18001\textasciitilde20700），用于超参数选择与收敛监控；测试集96张（编号20701\textasciitilde20796），用于最终性能评估与可视化展示。
+(2) 服装数据集包含服装图像及其对应的光学散斑图像，共计20,797张配对样本。按照编号进行划分：训练集18,001张（编号0\textasciitilde18000），用于网络参数学习；验证集2,700张（编号18001\textasciitilde20700），用于超参数选择与收敛监控；测试集96张（编号20701\textasciitilde20796），用于最终性能评估与可视化展示。
 
 表\ref{tab:dataset_division}汇总了两类数据集的详细划分情况。
 
@@ -50,12 +50,7 @@
 
 \subsection{数据集特征与使用方式}\label{sec:dataset_preprocess}
 
-\citet{sun2024ol_calibrationfree}公开的数据集已经过完整的实验采集与预处理，可直接用于神经网络训练。数据集的主要特征如下：
-\begin{itemize}
-    \item \textbf{图像尺寸}：所有散斑图像与目标图像均为$128\times 128$像素的灰度图像，尺寸统一，无需额外裁剪或缩放。
-    \item \textbf{数据格式}：图像以标准格式存储（如PNG等），像素值范围通常为$[0, 255]$的8位整数。
-    \item \textbf{配对关系}：每个散斑图像与其对应的目标图像按编号一一对应，便于构建训练数据对。
-\end{itemize}
+\citet{sun2024ol_calibrationfree}公开的数据集已经过完整的实验采集与预处理，可直接用于神经网络训练。所有散斑图像与目标图像均为$128\times 128$像素的灰度图像，尺寸统一，无需额外裁剪或缩放。图像以标准格式存储（如PNG等），像素值范围通常为$[0, 255]$的8位整数。每个散斑图像与其对应的目标图像按编号一一对应，便于构建训练数据对。
 
 在模型训练时，仅需将图像像素值归一化到$[0,1]$区间（除以255），以匹配网络输出层Sigmoid激活函数的值域。本章实验未使用数据增强技术（如随机翻转、旋转等），以保持与参考文献\citep{sun2024ol_calibrationfree}的可比性。数据加载使用PyTorch的DataLoader模块，支持批量读取与GPU加速训练。
 
@@ -65,26 +60,11 @@
 
 本章采用编码器-解码器结构的U-Net神经网络作为重建模型，用于学习散斑图像到目标图像的映射关系。该类模型具备多尺度特征提取与细节恢复能力，适用于图像到图像的重建任务。
 
-网络架构参考\citet{sun2024ol_calibrationfree}论文中的结构示意图（见图\ref{fig:unet_arch}），由于原作者使用MATLAB实现，本研究采用Python语言与PyTorch深度学习框架进行复现。网络结构采用经典的U-Net编码器-解码器架构，具体包括：
+\citet{sun2024ol_calibrationfree}在其研究中使用MATLAB搭建U-Net网络进行实验（见图\ref{fig:unet_arch}）。本研究基于该架构，采用Python语言与PyTorch深度学习框架进行复刻，并在此基础上进行了改进。复刻的网络采用经典的编码器-解码器结构，编码器包含4个下采样阶段，每阶段由2个卷积块和1个最大池化层组成，通道数依次为128、256、512、1024，每次下采样后应用Dropout2D正则化（丢弃率0.3）以防止过拟合。相比原架构的最大通道数1024，本研究将桥接层的通道数提升至2048，该层包含2个卷积块，随后通过转置卷积上采样回1024通道。解码器包含4个上采样阶段（原架构为3个），每阶段通过跳跃连接将编码器对应层的特征与上采样特征进行通道拼接，然后经过2个卷积块和1个转置卷积层进行特征融合与空间分辨率恢复。最后，输出层使用$3\times 3$卷积将特征图映射为单通道灰度图像，并通过Sigmoid激活函数将输出归一化到[0,1]区间。
 
-\begin{itemize}
-    \item \textbf{编码器（Encoder）}：包含4个下采样阶段，每阶段由2个卷积块和1个最大池化层组成，通道数依次为128、256、512、1024。每次下采样后应用Dropout2D正则化（丢弃率0.3）以防止过拟合。
-    \item \textbf{桥接层（Bridge Layer）}：位于编码器和解码器之间的最深层，包含2个卷积块，通道数为2048，随后通过转置卷积上采样回1024通道，起到连接编码器和解码器的桥梁作用。
-    \item \textbf{解码器（Decoder）}：包含4个上采样阶段，每阶段通过跳跃连接将编码器对应层的特征与上采样特征进行通道拼接，然后经过2个卷积块和1个转置卷积层进行特征融合与空间分辨率恢复。
-    \item \textbf{输出层}：使用$3\times 3$卷积将特征图映射为单通道灰度图像，并通过Sigmoid激活函数将输出归一化到[0,1]区间。
-\end{itemize}
+网络的基础构建模块方面，卷积块由$3\times 3$卷积（填充为1，反射模式）、批归一化和LeakyReLU激活函数组成；下采样使用$2\times 2$最大池化，步长为2；上采样使用$4\times 4$转置卷积，步长为2，填充为1；跳跃连接通过通道维度拼接实现编码器与解码器对应层的特征融合。
 
-网络的基础构建模块包括：
-\begin{itemize}
-    \item \textbf{卷积块}：由$3\times 3$卷积（填充为1，反射模式）、批归一化和LeakyReLU激活函数组成。
-    \item \textbf{下采样}：使用$2\times 2$最大池化，步长为2。
-    \item \textbf{上采样}：使用$4\times 4$转置卷积，步长为2，填充为1。
-    \item \textbf{跳跃连接}：通过通道维度拼接实现编码器与解码器对应层的特征融合。
-\end{itemize}
-
-图\ref{fig:unet_arch}展示了U-Net网络的整体架构示意图。
-
-% 注：图\ref{fig:unet_arch}为参考文献原图的复用，已在中英文图题中注明来源。
+图\ref{fig:unet_arch}展示了\citet{sun2024ol_calibrationfree}提出的U-Net网络架构，该架构为本章实验以及第四章DLU-Net网络的设计提供了原始参考。
 
 \begin{figure}[!htbp]
     \centering
@@ -97,18 +77,11 @@
 
 \subsection{实现与训练细节}\label{sec:unet_detail}
 
-\paragraph{网络实现细节} 本研究使用PyTorch 2.0.1框架（CUDA 11.8）实现U-Net网络，采用模块化设计以提高代码可维护性。网络由以下基础模块构成：
-\begin{itemize}
-    \item \textbf{Conv\_Block}：卷积块模块，封装了卷积层、批归一化和LeakyReLU激活函数的组合。卷积层采用反射填充模式以减少边界伪影。
-    \item \textbf{Max\_Pool2d}：最大池化模块，核大小为$2\times 2$，步长为2，用于编码器的下采样。
-    \item \textbf{TransposedConvLayer}：转置卷积模块，核大小为$4\times 4$，步长为2，填充为1，用于解码器的上采样。
-    \item \textbf{ConcatenationLayer}：拼接模块，实现跳跃连接中的特征图拼接操作。
-    \item \textbf{Dropout2dLayer}：二维Dropout模块，在编码器每个下采样后应用，丢弃率为0.3。
-\end{itemize}
+本研究使用PyTorch 2.0.1框架（CUDA 11.8）实现U-Net网络，采用模块化设计以提高代码可维护性。网络由多个基础模块构成：\textbf{Conv\_Block}卷积块模块封装了卷积层、批归一化和LeakyReLU激活函数的组合，其中卷积层采用反射填充模式以减少边界伪影；\textbf{Max\_Pool2d}最大池化模块（核大小为$2\times 2$，步长为2）用于编码器的下采样；\textbf{TransposedConvLayer}转置卷积模块（核大小为$4\times 4$，步长为2，填充为1）用于解码器的上采样；\textbf{ConcatenationLayer}拼接模块实现跳跃连接中的特征图拼接操作；\textbf{Dropout2dLayer}二维Dropout模块在编码器每个下采样后应用，丢弃率为0.3。
 
-编码器的前向传播过程为：每阶段依次执行"卷积块→卷积块→最大池化→Dropout"操作；解码器的前向传播过程为：每阶段依次执行"特征拼接→卷积块→卷积块→转置卷积"操作。这种对称设计确保了特征提取与图像重建的平衡。
+编码器的前向传播过程为：每阶段依次执行“卷积块→卷积块→最大池化→Dropout”操作；解码器的前向传播过程为：每阶段依次执行“特征拼接→卷积块→卷积块→转置卷积“操作。这种对称设计确保了特征提取与图像重建的平衡。
 
-\paragraph{训练配置} 为便于复现与后续章节对比，本章固定输入输出尺寸、训练轮数、批大小、学习率调度等关键设置，并记录数据划分与随机种子。表\ref{tab:train_config}汇总了主要的训练配置参数。
+为便于复现与后续章节对比，本章固定输入输出尺寸、训练轮数、批大小、学习率调度等关键设置，并记录数据划分与随机种子。表\ref{tab:train_config}汇总了主要的训练配置参数。
 
 \begin{table}[!htbp]
     \centering
@@ -157,7 +130,7 @@
 
 训练过程中采用混合精度训练（Automatic Mixed Precision, AMP）技术，利用torch.cuda.amp模块加速训练并降低显存占用，同时保持数值稳定性。训练共进行40轮，在验证集上保存损失最小的模型作为最终模型。
 
-\subsection{评价指标：SSIM}\label{sec:metrics}
+\subsection{评价指标}\label{sec:metrics}
 
 本章使用结构相似度（Structural Similarity Index Measure, SSIM）作为主要评价指标。SSIM用于衡量两幅图像在亮度、对比度与结构信息上的一致性，其取值通常在$[0,1]$范围内，值越大表示重建图像与目标图像越相似。
 
@@ -175,7 +148,7 @@ SSIM的计算公式为：
 
 \subsubsection{手写数字数据集重建结果}
 
-图\ref{fig:mnist_loss}展示了手写数字数据集的训练损失曲线。从图中可以看出，训练损失和验证损失均随训练轮数的增加而快速下降，在前10轮内快速收敛，随后逐渐趋于平稳。训练过程稳定，未出现明显的过拟合现象，验证损失与训练损失保持较为一致的下降趋势，表明网络具有良好的泛化能力。
+手写数字数据集的训练损失曲线如图\ref{fig:mnist_loss}所示。从图中可以看出，训练损失和验证损失均随训练轮数的增加而快速下降，在前10轮内快速收敛，随后逐渐趋于平稳。训练过程稳定，未出现明显的过拟合现象，验证损失与训练损失保持较为一致的下降趋势，表明网络具有良好的泛化能力。
 
 \begin{figure}[!htbp]
     \centering
@@ -184,7 +157,7 @@ SSIM的计算公式为：
     \label{fig:mnist_loss}
 \end{figure}
 
-图\ref{fig:mnist_examples}展示了9组代表性重建样本，每组样本从左到右依次为输入散斑图像、真实图像和重建结果。从图中可以看出，网络能够从随机分布的散斑图案中准确重建出手写数字的形态与细节，重建结果在数字边缘、笔画粗细以及整体结构上均与真实图像高度一致，视觉质量良好。
+为了直观展示网络的重建效果，图\ref{fig:mnist_examples}给出了9组代表性样本，每组从左到右依次为输入散斑图像、真实图像和重建结果。从这些样本可以看出，网络能够从随机分布的散斑图案中准确重建出手写数字的形态与细节，重建结果在数字边缘、笔画粗细以及整体结构上均与真实图像高度一致，视觉质量良好。
 
 \begin{figure}[!htbp]
     \centering
@@ -193,27 +166,25 @@ SSIM的计算公式为：
     \label{fig:mnist_examples}
 \end{figure}
 
-图\ref{fig:mnist_ssim_dist}展示了78张测试集样本的SSIM分布散点图。从图中可以看出，所有测试样本的SSIM值均分布在0.96至0.995之间，平均SSIM达到0.982，表明网络在手写数字重建任务上取得了稳定且高质量的性能表现，不同样本间的重建质量差异较小。
+从78张测试集样本的SSIM分布散点图（见图\ref{fig:mnist_ssim_dist}）可以看出，所有测试样本的SSIM值均分布在0.96至0.995之间，平均SSIM达到0.982，表明网络在手写数字重建任务上取得了稳定且高质量的性能表现，不同样本间的重建质量差异较小。
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=0.85\textwidth]{Img/3/mnist_ssim.pdf}
+    \includegraphics[width=0.6\textwidth]{Img/3/mnist_ssim.pdf}
     \bicaption{\enspace 手写数字数据集测试集SSIM分布散点图（横轴为图片编号，纵轴为SSIM值）}{\enspace SSIM distribution scatter plot of test set for handwritten digits dataset (x-axis: image index, y-axis: SSIM value)}
     \label{fig:mnist_ssim_dist}
 \end{figure}
 
-图\ref{fig:mnist_result}给出了全部78张测试集样本的重建结果缩略图，每张结果图上标注了对应的SSIM值。该图直观地展示了网络在整个测试集上的重建性能，可以观察到不同数字（0-9）的重建质量均保持在较高水平，验证了网络的泛化能力与鲁棒性。
+全部78张测试集样本的重建结果缩略图见图\ref{fig:mnist_result}，每张结果图上标注了对应的SSIM值。该图直观地展示了网络在整个测试集上的重建性能，可以观察到不同数字（0-9）的重建质量均保持在较高水平，验证了网络的泛化能力与鲁棒性。
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=0.95\textwidth]{Img/3/mnist_result.pdf}
+    \includegraphics[width=0.85\textwidth]{Img/3/mnist_result.pdf}
     \bicaption{\enspace 手写数字数据集全部78张测试集重建结果（每张结果标注SSIM值）}{\enspace All 78 reconstruction results on handwritten digits test set (each with SSIM value labeled)}
     \label{fig:mnist_result}
 \end{figure}
 
 \subsubsection{服装数据集重建结果}
-
-图\ref{fig:fashion_loss}展示了服装数据集的训练损失曲线。与手写数字数据集类似，训练损失和验证损失均呈现稳定的下降趋势，在训练初期快速收敛。相比手写数字数据集，服装数据集的损失值整体略高，反映了服装图像更高的重建复杂度。训练过程同样未出现明显过拟合，验证了网络在不同复杂度数据集上的适应能力。
 
 \begin{figure}[!htbp]
     \centering
@@ -222,29 +193,31 @@ SSIM的计算公式为：
     \label{fig:fashion_loss}
 \end{figure}
 
-图\ref{fig:fashion_examples}展示了服装数据集的9组代表性重建样本，每组样本从左到右依次为输入散斑图像、真实图像和重建结果。相比手写数字，服装图像包含更丰富的纹理细节与更复杂的轮廓结构，对网络的重建能力提出了更高要求。从重建结果可以看出，网络能够较好地恢复服装的整体形态和主要纹理特征。
+服装数据集的训练损失变化趋势如图\ref{fig:fashion_loss}所示。与手写数字数据集类似，训练损失和验证损失均呈现稳定的下降趋势，在训练初期快速收敛。相比手写数字数据集，服装数据集的损失值整体略高，反映了服装图像更高的重建复杂度。训练过程同样未出现明显过拟合，验证了网络在不同复杂度数据集上的适应能力。
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=0.95\textwidth]{Img/3/3-3.png}
+    \includegraphics[width=0.85\textwidth]{Img/3/3-3.png}
     \bicaption{\enspace 服装数据集重建结果示例（9组样本，每组从左到右依次为：输入散斑、真实图像、重建结果）}{\enspace Reconstruction examples on fashion dataset (9 samples, each row from left to right: input speckle, ground truth, reconstruction)}
     \label{fig:fashion_examples}
 \end{figure}
 
-图\ref{fig:fashion_ssim_dist}展示了服装数据集96张测试集样本的SSIM分布散点图，用于量化评估网络在该数据集上的重建质量与稳定性。
+9组代表性的服装重建样本如图\ref{fig:fashion_examples}所示，每组从左到右依次为输入散斑图像、真实图像和重建结果。相比手写数字，服装图像包含更丰富的纹理细节与更复杂的轮廓结构，对网络的重建能力提出了更高要求。从重建结果可以看出，网络能够较好地恢复服装的整体形态和主要纹理特征。
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=0.85\textwidth]{Img/3/fashion_ssim.pdf}
+    \includegraphics[width=0.6\textwidth]{Img/3/fashion_ssim.pdf}
     \bicaption{\enspace 服装数据集测试集SSIM分布散点图（横轴为图片编号，纵轴为SSIM值）}{\enspace SSIM distribution scatter plot of test set for fashion dataset (x-axis: image index, y-axis: SSIM value)}
     \label{fig:fashion_ssim_dist}
 \end{figure}
 
-图\ref{fig:fashion_result}给出了服装数据集全部96张测试集样本的重建结果缩略图，每张结果图上标注了对应的SSIM值。从SSIM值分布可以看出，绝大多数样本的SSIM值在0.85以上，最高达到0.984，最低为0.750。整体重建质量稳定，直观展示了网络在不同服装类型上的重建性能。
+为了量化评估网络在服装数据集上的重建质量与稳定性，图\ref{fig:fashion_ssim_dist}给出了96张测试集样本的SSIM分布散点图。
+
+服装数据集全部96张测试集样本的重建结果缩略图见图\ref{fig:fashion_result}，每张结果上标注了对应的SSIM值。从SSIM值分布可以看出，绝大多数样本的SSIM值在0.85以上，最高达到0.984，最低为0.750。整体重建质量稳定，直观展示了网络在不同服装类型上的重建性能。
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=0.95\textwidth]{Img/3/fashion_mnist_result.pdf}
+    \includegraphics[width=0.85\textwidth]{Img/3/fashion_mnist_result.pdf}
     \bicaption{\enspace 服装数据集全部96张测试集重建结果（每张结果标注SSIM值）}{\enspace All 96 reconstruction results on fashion test set (each with SSIM value labeled)}
     \label{fig:fashion_result}
 \end{figure}

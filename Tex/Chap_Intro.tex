@@ -19,7 +19,7 @@
 
 \subsection{多模光纤成像技术的发展}
 
-多模光纤（Multimode Fiber, MMF）因其能够支持数千个空间模式，在保持纤细柔性的同时提供了巨大的信息传输容量，使其成为全息内窥成像的理想探针\citep{conkey2012high,bianchi2012multi,cizmar2012exploiting,papadopoulos2013high}。其小型化和微创性的特点使其在生物组织深部成像中极具吸引力\citep{wen2023single,stiburek2023110,ohayon2018minimally,vasquez2018subcellular,turtaev2018high}。然而，多模光纤中的光传输受到模式耦合、模式干涉以及侧壁反射的复杂影响，导致输出端呈现出复杂的散斑样强度分布，使得直接成像变得困难。
+多模光纤（Multimode Fiber, MMF）因其能够支持数千个空间模式，在保持纤细柔性的同时提供了巨大的信息传输容量，使其成为全息内窥成像的理想探针\citep{conkey2012high,bianchi2012multi,cizmar2012exploiting,papadopoulos2013high,张持铭2025基于光场调控的多模光纤成像技术及应用,程圣福2024基于相干光调控的无透镜光纤成像及其应用}。其小型化和微创性的特点使其在生物组织深部成像中极具吸引力\citep{wen2023single,stiburek2023110,ohayon2018minimally,vasquez2018subcellular,turtaev2018high}。然而，多模光纤中的光传输受到模式耦合、模式干涉以及侧壁反射的复杂影响，导致输出端呈现出复杂的散斑样强度分布，使得直接成像变得困难。
 
 \subsubsection{基于波前整形的方法}
 
@@ -55,7 +55,7 @@
 
 \subsection{深度学习方法在多模光纤成像中的进展}
 
-作为波前整形方法的替代方案，深度学习技术近年来已成为多模光纤图像重建的重要途径\citep{fan2021deep,fan2021learning,fan2019high,liu2023single}。通过直接学习光纤输出端的仅强度散斑图案，深度神经网络，特别是U-Net和卷积神经网络等架构，已实现了精确的图像恢复，甚至能够处理公里级长度光纤的成像\citep{borhani2018learning,rahmani2018multimode,zhu2023anti,liu2022learning,wang2022complex,yang2022single,zhan2024enhanced}。Zhan等人\citep{zhan2024enhanced}进一步提出了基于奇异值分解的模态调制方法，通过选择性激发光纤内部模式来提升成像质量。如图\ref{fig:zhan2024_enhanced}所示，该方法在40微米芯径的多模光纤系统中，针对MNIST、QuickDraw、SIPaKMeD和ImageNet四种不同数据集均实现了显著的重建质量提升，证明了模态调制策略的有效性。
+作为波前整形方法的替代方案，深度学习技术近年来已成为多模光纤图像重建的重要途径\citep{fan2021deep,fan2021learning,fan2019high,liu2023single}。通过直接学习光纤输出端的仅强度散斑图案，深度神经网络，特别是U-Net和卷积神经网络等架构，已实现了精确的图像恢复，甚至能够处理公里级长度光纤的成像\citep{borhani2018learning,rahmani2018multimode,zhu2023anti,liu2022learning,wang2022complex,yang2022single,zhan2024enhanced,1022445882.nh,JGDJ202311012,GXXB202507017,JJZZ202012031}。Zhan等人\citep{zhan2024enhanced}进一步提出了基于奇异值分解的模态调制方法，通过选择性激发光纤内部模式来提升成像质量。如图\ref{fig:zhan2024_enhanced}所示，该方法在40微米芯径的多模光纤系统中，针对MNIST、QuickDraw、SIPaKMeD和ImageNet四种不同数据集均实现了显著的重建质量提升，证明了模态调制策略的有效性。
 
 \begin{figure}[!htbp]
     \centering
@@ -95,7 +95,7 @@ U-Net网络\citep{ronneberger2015unet}最初为生物医学图像分割设计，
 尽管深度学习在多模光纤散斑成像中展现出了巨大潜力，但现有研究仍面临以下挑战：
 
 \begin{enumerate}
-    \item 多模光纤支持数千个空间模式，具有巨大的信息传输容量。然而，现有研究大多将同质化程度较高的单一图像数据集直接投射到空间光调制器后耦合进光纤，未能充分利用光纤的多模态传输能力。如何通过编码技术（如全息编码、偏振编码等）进一步提升信息复用度和传输效率，是一个值得探索的方向。
+    \item 多模光纤支持数千个空间模式，具有巨大的信息传输容量\citep{JGDJ202517029}。然而，现有研究大多将同质化程度较高的单一图像数据集直接投射到空间光调制器后耦合进光纤，未能充分利用光纤的多模态传输能力。如何通过编码技术（如全息编码、偏振编码等）进一步提升信息复用度和传输效率，是一个值得探索的方向。
     
     \item 虽然已有研究探索了全息编码\citep{collard2024exploiting}和偏振编码\citep{fan2021learning}等单一编码方式，但对于多种编码方式的协同作用、最优编码策略以及编码参数对重建质量的影响机制，仍缺乏系统化的研究。
     

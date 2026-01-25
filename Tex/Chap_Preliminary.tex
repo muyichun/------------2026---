@@ -33,7 +33,7 @@
 
 \begin{table}[!htbp]
     \centering
-    \bicaption{\enspace 公开数据集的划分统计}{\enspace Division statistics of public datasets}
+    \bicaption[公开数据集的划分统计]{\enspace 公开数据集的划分统计}[Division statistics of public datasets]{\enspace Division statistics of public datasets}
     \label{tab:dataset_division}
     \footnotesize
     \setlength{\tabcolsep}{10pt}
@@ -70,8 +70,8 @@
     \centering
     \includegraphics[width=0.90\textwidth]{Img/3/3-1.png}
     \captionsetup{justification=centering,singlelinecheck=false}
-    \bicaption{\enspace U-Net网络结构示意图\citep{sun2024ol_calibrationfree}}
-              {\enspace U-Net Network Architecture Diagram\citep{sun2024ol_calibrationfree}}
+    \bicaption[U-Net网络结构示意图]{\enspace U-Net网络结构示意图\citep{sun2024ol_calibrationfree}}
+              [U-Net Network Architecture Diagram]{\enspace U-Net Network Architecture Diagram\citep{sun2024ol_calibrationfree}}
     \label{fig:unet_arch}
 \end{figure}
 
@@ -85,7 +85,7 @@
 
 \begin{table}[!htbp]
     \centering
-    \bicaption{\enspace 网络训练配置参数}{\enspace Network training configuration parameters}
+    \bicaption[网络训练配置参数]{\enspace 网络训练配置参数}[Network training configuration parameters]{\enspace Network training configuration parameters}
     \label{tab:train_config}
     \footnotesize
     \setlength{\tabcolsep}{10pt}
@@ -153,7 +153,7 @@ SSIM的计算公式为：
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.85\textwidth]{Img/3/mnist_loss_curve.pdf}
-    \bicaption{\enspace 手写数字数据集训练损失曲线}{\enspace Training loss curve on handwritten digits dataset}
+    \bicaption[手写数字数据集训练损失曲线]{\enspace 手写数字数据集训练损失曲线}[Training loss curve on handwritten digits dataset]{\enspace Training loss curve on handwritten digits dataset}
     \label{fig:mnist_loss}
 \end{figure}
 
@@ -162,7 +162,7 @@ SSIM的计算公式为：
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.85\textwidth]{Img/3/3-2.png}
-    \bicaption{\enspace 手写数字数据集重建结果示例（9组样本，每组从左到右依次为：输入散斑、真实图像、重建结果）}{\enspace Reconstruction examples on handwritten digits dataset (9 samples, each row from left to right: input speckle, ground truth, reconstruction)}
+    \bicaption[手写数字数据集重建结果示例]{\enspace 手写数字数据集重建结果示例（9组样本，每组从左到右依次为：输入散斑、真实图像、重建结果）}[Reconstruction examples on handwritten digits dataset]{\enspace Reconstruction examples on handwritten digits dataset (9 samples, each row from left to right: input speckle, ground truth, reconstruction)}
     \label{fig:mnist_examples}
 \end{figure}
 
@@ -171,7 +171,7 @@ SSIM的计算公式为：
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.6\textwidth]{Img/3/mnist_ssim.pdf}
-    \bicaption{\enspace 手写数字数据集测试集SSIM分布散点图（横轴为图片编号，纵轴为SSIM值）}{\enspace SSIM distribution scatter plot of test set for handwritten digits dataset (x-axis: image index, y-axis: SSIM value)}
+    \bicaption[手写数字数据集测试集SSIM分布散点图]{\enspace 手写数字数据集测试集SSIM分布散点图（横轴为图片编号，纵轴为SSIM值）}[SSIM distribution scatter plot for handwritten digits dataset]{\enspace SSIM distribution scatter plot of test set for handwritten digits dataset (x-axis: image index, y-axis: SSIM value)}
     \label{fig:mnist_ssim_dist}
 \end{figure}
 
@@ -180,7 +180,7 @@ SSIM的计算公式为：
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.85\textwidth]{Img/3/mnist_result.pdf}
-    \bicaption{\enspace 手写数字数据集全部78张测试集重建结果（每张结果标注SSIM值）}{\enspace All 78 reconstruction results on handwritten digits test set (each with SSIM value labeled)}
+    \bicaption[手写数字数据集全部测试集重建结果]{\enspace 手写数字数据集全部78张测试集重建结果（每张结果标注SSIM值）}[All reconstruction results on handwritten digits test set]{\enspace All 78 reconstruction results on handwritten digits test set (each with SSIM value labeled)}
     \label{fig:mnist_result}
 \end{figure}
 
@@ -189,7 +189,7 @@ SSIM的计算公式为：
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.85\textwidth]{Img/3/fashion_mnist_loss_curve .pdf}
-    \bicaption{\enspace 服装数据集训练损失曲线}{\enspace Training loss curve on fashion dataset}
+    \bicaption[服装数据集训练损失曲线]{\enspace 服装数据集训练损失曲线}[Training loss curve on fashion dataset]{\enspace Training loss curve on fashion dataset}
     \label{fig:fashion_loss}
 \end{figure}
 
@@ -198,7 +198,7 @@ SSIM的计算公式为：
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.85\textwidth]{Img/3/3-3.png}
-    \bicaption{\enspace 服装数据集重建结果示例（9组样本，每组从左到右依次为：输入散斑、真实图像、重建结果）}{\enspace Reconstruction examples on fashion dataset (9 samples, each row from left to right: input speckle, ground truth, reconstruction)}
+    \bicaption[服装数据集重建结果示例]{\enspace 服装数据集重建结果示例（9组样本，每组从左到右依次为：输入散斑、真实图像、重建结果）}[Reconstruction examples on fashion dataset]{\enspace Reconstruction examples on fashion dataset (9 samples, each row from left to right: input speckle, ground truth, reconstruction)}
     \label{fig:fashion_examples}
 \end{figure}
 
@@ -207,7 +207,7 @@ SSIM的计算公式为：
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.6\textwidth]{Img/3/fashion_ssim.pdf}
-    \bicaption{\enspace 服装数据集测试集SSIM分布散点图（横轴为图片编号，纵轴为SSIM值）}{\enspace SSIM distribution scatter plot of test set for fashion dataset (x-axis: image index, y-axis: SSIM value)}
+    \bicaption[服装数据集测试集SSIM分布散点图]{\enspace 服装数据集测试集SSIM分布散点图（横轴为图片编号，纵轴为SSIM值）}[SSIM distribution scatter plot for fashion dataset]{\enspace SSIM distribution scatter plot of test set for fashion dataset (x-axis: image index, y-axis: SSIM value)}
     \label{fig:fashion_ssim_dist}
 \end{figure}
 
@@ -218,7 +218,7 @@ SSIM的计算公式为：
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.85\textwidth]{Img/3/fashion_mnist_result.pdf}
-    \bicaption{\enspace 服装数据集全部96张测试集重建结果（每张结果标注SSIM值）}{\enspace All 96 reconstruction results on fashion test set (each with SSIM value labeled)}
+    \bicaption[服装数据集全部测试集重建结果]{\enspace 服装数据集全部96张测试集重建结果（每张结果标注SSIM值）}[All reconstruction results on fashion test set]{\enspace All 96 reconstruction results on fashion test set (each with SSIM value labeled)}
     \label{fig:fashion_result}
 \end{figure}
 
@@ -228,7 +228,7 @@ SSIM的计算公式为：
 
 \begin{table}[!htbp]
     \centering
-    \bicaption{\enspace 公开数据集上的SSIM评价结果}{\enspace SSIM results on public datasets}
+    \bicaption[公开数据集上的SSIM评价结果]{\enspace 公开数据集上的SSIM评价结果}[SSIM results on public datasets]{\enspace SSIM results on public datasets}
     \label{tab:public_quant}
     \footnotesize
     \setlength{\tabcolsep}{12pt}

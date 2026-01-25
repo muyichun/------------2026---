@@ -2,32 +2,96 @@
 
 \intobmk\chapter*{符号列表}% 显示在书签但不显示在目录
 
-\section*{字符}
-\nomenclatureitem[\textbf{Unit}]{\textbf{Symbol}}{\textbf{Description}}
-\nomenclatureitem[$\Unit{m^{2} \cdot s^{-2} \cdot K^{-1}}$]{$R$}{the gas constant}
-\nomenclatureitem[$\Unit{m^{2} \cdot s^{-2} \cdot K^{-1}}$]{$C_v$}{specific heat capacity at constant volume}
-\nomenclatureitem[$\Unit{m^{2} \cdot s^{-2} \cdot K^{-1}}$]{$C_p$}{specific heat capacity at constant pressure}
-\nomenclatureitem[$\Unit{m^{2} \cdot s^{-2}}$]{$E$}{specific total energy}
-\nomenclatureitem[$\Unit{m^{2} \cdot s^{-2}}$]{$e$}{specific internal energy}
-\nomenclatureitem[$\Unit{m^{2} \cdot s^{-2}}$]{$h_T$}{specific total enthalpy}
-\nomenclatureitem[$\Unit{m^{2} \cdot s^{-2}}$]{$h$}{specific enthalpy}
-\nomenclatureitem[$\Unit{kg \cdot m \cdot s^{-3} \cdot K^{-1}}$]{$k$}{thermal conductivity}
-\nomenclatureitem[$\Unit{kg \cdot m^{-1} \cdot s^{-2}}$]{$S_{ij}$}{deviatoric stress tensor}
-\nomenclatureitem[$\Unit{kg \cdot m^{-1} \cdot s^{-2}}$]{$\tau_{ij}$}{viscous stress tensor}
-\nomenclatureitem[$\Unit{1}$]{$\delta_{ij}$}{Kronecker tensor}
-\nomenclatureitem[$\Unit{1}$]{$I_{ij}$}{identity tensor}
+\section*{光学与光纤参数}
+\nomenclatureitem{\textbf{符号}}{\textbf{描述}}
+\nomenclatureitem{$a$}{光纤纤芯半径}
+\nomenclatureitem{$d$}{光纤纤芯直径}
+\nomenclatureitem{$\lambda$}{光波长}
+\nomenclatureitem{NA}{数值孔径（Numerical Aperture）}
+\nomenclatureitem{$V$}{归一化频率参数}
+\nomenclatureitem{$M$}{光纤支持的模式数量}
+\nomenclatureitem{$a_i$}{第$i$个模式的振幅}
+\nomenclatureitem{$\phi_i$}{第$i$个模式的相位}
+\nomenclatureitem{$\psi_i(\mathbf{r})$}{第$i$个模式在输出端的场分布}
+\nomenclatureitem{$E(\mathbf{r})$}{散斑场复振幅}
+\nomenclatureitem{$\mathbf{S}$}{散斑图像}
+\nomenclatureitem{$\mathbf{I}$}{输入/目标图像}
+\nomenclatureitem{$\hat{Y}$}{重建图像}
+\nomenclatureitem{$\mathcal{T}$}{多模光纤传输算子}
+\nomenclatureitem{$N_{\text{holo}}$}{全息标签数量}
+\nomenclatureitem{$N_{\text{pol}}$}{偏振态数量}
+\nomenclatureitem{$S_{offset}^{DMD}$}{DMD上的标签坐标偏移集合}
+\nomenclatureitem{$(u_0, v_0)$}{傅里叶平面离轴位置}
 
-\section*{算子}
-\nomenclatureitem{\textbf{Symbol}}{\textbf{Description}}
-\nomenclatureitem{$\Delta$}{difference}
-\nomenclatureitem{$\nabla$}{gradient operator}
-\nomenclatureitem{$\delta^{\pm}$}{upwind-biased interpolation scheme}
+\section*{深度学习参数}
+\nomenclatureitem{\textbf{符号}}{\textbf{描述}}
+\nomenclatureitem{$f_{\theta}$}{参数化神经网络映射}
+\nomenclatureitem{$\theta$}{网络参数}
+\nomenclatureitem{$\mathcal{L}$}{损失函数}
+\nomenclatureitem{$\mathcal{L}_{\text{MAE}}$}{平均绝对误差损失}
+\nomenclatureitem{$\mathcal{L}_{\text{MSE}}$}{均方误差损失}
+\nomenclatureitem{$H$, $W$}{图像高度与宽度}
+\nomenclatureitem{$N$}{像素总数/样本数}
+\nomenclatureitem{$w_i$}{网络权重}
+\nomenclatureitem{$b$}{偏置}
+\nomenclatureitem{$\mathbf{K}$}{卷积核}
+\nomenclatureitem{$\text{lr}$}{学习率（Learning Rate）}
+\nomenclatureitem{$\gamma$}{学习率衰减因子}
+\nomenclatureitem{$\alpha$}{Leaky ReLU斜率参数}
+\nomenclatureitem{$\beta_1$, $\beta_2$}{Adam优化器动量参数}
+\nomenclatureitem{$\epsilon$}{数值稳定性常数}
+\nomenclatureitem{$R(\mathbf{x})$}{正则化项}
+\nomenclatureitem{$\mathbf{n}$}{噪声}
+
+\section*{评价指标}
+\nomenclatureitem{\textbf{符号}}{\textbf{描述}}
+\nomenclatureitem{SSIM}{结构相似度（Structural Similarity Index Measure）}
+\nomenclatureitem{$\mu_x$, $\mu_y$}{图像均值}
+\nomenclatureitem{$\sigma_x$, $\sigma_y$}{图像标准差}
+\nomenclatureitem{$\sigma_{xy}$}{协方差}
+\nomenclatureitem{$C_1$, $C_2$}{SSIM稳定常数}
+
+\section*{算子与函数}
+\nomenclatureitem{\textbf{符号}}{\textbf{描述}}
+\nomenclatureitem{$\mathcal{F}$}{傅里叶变换}
+\nomenclatureitem{$\mathcal{F}^{-1}$}{逆傅里叶变换}
+\nomenclatureitem{$\mathcal{H}$}{前向成像算子}
+\nomenclatureitem{$*$}{卷积运算}
+\nomenclatureitem{ReLU}{线性整流函数，$\max(0, x)$}
+\nomenclatureitem{Leaky ReLU}{泄漏线性整流函数}
+\nomenclatureitem{$\sigma(x)$}{Sigmoid激活函数}
+\nomenclatureitem{$\tanh(x)$}{双曲正切激活函数}
+\nomenclatureitem{$\arg[\cdot]$}{取相位角}
 
 \section*{缩写}
-\nomenclatureitem{CFD}{Computational Fluid Dynamics}
-\nomenclatureitem{CFL}{Courant-Friedrichs-Lewy}
-\nomenclatureitem{EOS}{Equation of State}
-\nomenclatureitem{JWL}{Jones-Wilkins-Lee}
-\nomenclatureitem{WENO}{Weighted Essentially Non-oscillatory}
-\nomenclatureitem{ZND}{Zel'dovich-von Neumann-Doering}
+\nomenclatureitem{\textbf{缩写}}{\textbf{全称}}
+\nomenclatureitem{MMF}{Multimode Fiber（多模光纤）}
+\nomenclatureitem{SMF}{Single-Mode Fiber（单模光纤）}
+\nomenclatureitem{MCF}{Multi-core Fiber（多芯光纤）}
+\nomenclatureitem{PMF}{Polarization-Maintaining Fiber（保偏光纤）}
+\nomenclatureitem{DMD}{Digital Micromirror Device（数字微镜器件）}
+\nomenclatureitem{SLM}{Spatial Light Modulator（空间光调制器）}
+\nomenclatureitem{BD}{Beam Displacer（偏振分束器）}
+\nomenclatureitem{HWP}{Half-Wave Plate（半波片）}
+\nomenclatureitem{QWP}{Quarter-Wave Plate（四分之一波片）}
+\nomenclatureitem{LP}{Line Polarizer（线偏振片）}
+\nomenclatureitem{CGH}{Computer-Generated Holography（计算全息）}
+\nomenclatureitem{CCD}{Charge-Coupled Device（电荷耦合器件）}
+\nomenclatureitem{CMOS}{Complementary Metal-Oxide-Semiconductor（互补金属氧化物半导体）}
+\nomenclatureitem{DNN}{Deep Neural Network（深度神经网络）}
+\nomenclatureitem{CNN}{Convolutional Neural Network（卷积神经网络）}
+\nomenclatureitem{ANN}{Artificial Neural Network（人工神经网络）}
+\nomenclatureitem{U-Net}{编码器-解码器图像分割网络}
+\nomenclatureitem{DLU-Net}{DeepLeakyU-Net（本文提出的网络架构）}
+\nomenclatureitem{MAE}{Mean Absolute Error（平均绝对误差）}
+\nomenclatureitem{MSE}{Mean Squared Error（均方误差）}
+\nomenclatureitem{PSNR}{Peak Signal-to-Noise Ratio（峰值信噪比）}
+\nomenclatureitem{UMAP}{Uniform Manifold Approximation and Projection（均匀流形近似与投影）}
+\nomenclatureitem{t-SNE}{t-Distributed Stochastic Neighbor Embedding（t分布随机邻域嵌入）}
+\nomenclatureitem{GPU}{Graphics Processing Unit（图形处理单元）}
+\nomenclatureitem{CUDA}{Compute Unified Device Architecture（统一计算设备架构）}
+\nomenclatureitem{AMP}{Automatic Mixed Precision（自动混合精度）}
+\nomenclatureitem{TM}{Transmission Matrix（传输矩阵）}
+\nomenclatureitem{MNIST}{Modified National Institute of Standards and Technology（手写数字数据集）}
+\nomenclatureitem{SIM}{Structured Illumination Microscopy（结构光照明显微）}
 

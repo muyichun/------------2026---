@@ -152,7 +152,7 @@ SSIM的计算公式为：
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=0.85\textwidth]{Img/3/mnist_loss_curve.pdf}
+    \includegraphics[width=0.7\textwidth]{Img/3/mnist_loss_curve.pdf}
     \bicaption[手写数字数据集训练损失曲线]{\enspace 手写数字数据集训练损失曲线}[Training loss curve on handwritten digits dataset]{\enspace Training loss curve on handwritten digits dataset}
     \label{fig:mnist_loss}
 \end{figure}
@@ -179,21 +179,22 @@ SSIM的计算公式为：
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=0.85\textwidth]{Img/3/mnist_result.pdf}
+    \includegraphics[width=0.8\textwidth]{Img/3/mnist_result.pdf}
     \bicaption[手写数字数据集全部测试集重建结果]{\enspace 手写数字数据集全部78张测试集重建结果（每张结果标注SSIM值）}[All reconstruction results on handwritten digits test set]{\enspace All 78 reconstruction results on handwritten digits test set (each with SSIM value labeled)}
     \label{fig:mnist_result}
 \end{figure}
 
 \subsubsection{服装数据集重建结果}
 
+服装数据集的训练损失变化趋势如图\ref{fig:fashion_loss}所示。与手写数字数据集类似，训练损失和验证损失均呈现稳定的下降趋势，在训练初期快速收敛。相比手写数字数据集，服装数据集的损失值整体略高，反映了服装图像更高的重建复杂度。训练过程同样未出现明显过拟合，验证了网络在不同复杂度数据集上的适应能力。
+
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=0.85\textwidth]{Img/3/fashion_mnist_loss_curve .pdf}
+    \includegraphics[width=0.7\textwidth]{Img/3/fashion_mnist_loss_curve .pdf}
     \bicaption[服装数据集训练损失曲线]{\enspace 服装数据集训练损失曲线}[Training loss curve on fashion dataset]{\enspace Training loss curve on fashion dataset}
     \label{fig:fashion_loss}
 \end{figure}
 
-服装数据集的训练损失变化趋势如图\ref{fig:fashion_loss}所示。与手写数字数据集类似，训练损失和验证损失均呈现稳定的下降趋势，在训练初期快速收敛。相比手写数字数据集，服装数据集的损失值整体略高，反映了服装图像更高的重建复杂度。训练过程同样未出现明显过拟合，验证了网络在不同复杂度数据集上的适应能力。
 
 \begin{figure}[!htbp]
     \centering
@@ -215,7 +216,7 @@ SSIM的计算公式为：
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=0.85\textwidth]{Img/3/fashion_mnist_result.pdf}
+    \includegraphics[width=0.8\textwidth]{Img/3/fashion_mnist_result.pdf}
     \bicaption[服装数据集全部测试集重建结果]{\enspace 服装数据集全部96张测试集重建结果（每张结果标注SSIM值）}[All reconstruction results on fashion test set]{\enspace All 96 reconstruction results on fashion test set (each with SSIM value labeled)}
     \label{fig:fashion_result}
 \end{figure}

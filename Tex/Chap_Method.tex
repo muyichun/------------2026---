@@ -611,7 +611,7 @@ lr_{\text{epoch}} = lr_{\text{init}} \times \gamma^{\text{epoch}},
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=0.95\textwidth]{Img/4/fashion-umap-hologram.pdf}
+    \includegraphics[width=0.89\textwidth]{Img/4/fashion-umap-hologram.pdf}
     \bicaption[Fashion-MNIST散斑图全息标签聚类分析（UMAP）]{\enspace Fashion-MNIST数据集散斑图的全息标签聚类分析（UMAP降维）。(a) s偏振；(b) p偏振；(c) 混合偏振s+p。}[UMAP clustering analysis of Fashion-MNIST speckle patterns]{\enspace UMAP clustering analysis of Fashion-MNIST speckle patterns by holographic label. (a) s-polarization; (b) p-polarization; (c) mixed s+p polarization.}
     \label{fig:fashion_umap_hologram}
 \end{figure}
@@ -620,7 +620,7 @@ lr_{\text{epoch}} = lr_{\text{init}} \times \gamma^{\text{epoch}},
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=0.95\textwidth]{Img/4/fashion-tsne-hologram.pdf}
+    \includegraphics[width=0.89\textwidth]{Img/4/fashion-tsne-hologram.pdf}
     \bicaption[Fashion-MNIST散斑图全息标签聚类分析（t-SNE）]{\enspace Fashion-MNIST数据集散斑图的全息标签聚类分析（t-SNE降维）。(d) s偏振；(e) p偏振；(f) 混合偏振s+p。}[t-SNE clustering analysis of Fashion-MNIST speckle patterns]{\enspace t-SNE clustering analysis of Fashion-MNIST speckle patterns by holographic label. (a) s-polarization; (b) p-polarization; (c) mixed s+p polarization.}
     \label{fig:fashion_tsne_hologram}
 \end{figure}
@@ -629,7 +629,7 @@ lr_{\text{epoch}} = lr_{\text{init}} \times \gamma^{\text{epoch}},
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=0.95\textwidth]{Img/4/fashion-correlation-matrix.pdf}
+    \includegraphics[width=0.89\textwidth]{Img/4/fashion-correlation-matrix.pdf}
     \bicaption[Fashion-MNIST散斑图相关性矩阵分析]{\enspace Fashion-MNIST数据集散斑图的相关性矩阵分析。(g) s偏振；(h) p偏振；(i) 混合偏振s+p。}[Correlation matrix analysis of Fashion-MNIST speckle patterns]{\enspace Correlation matrix analysis of Fashion-MNIST speckle patterns. (a) s-polarization; (b) p-polarization; (c) mixed s+p polarization.}
     \label{fig:fashion_correlation_matrix}
 \end{figure}
@@ -638,14 +638,14 @@ lr_{\text{epoch}} = lr_{\text{init}} \times \gamma^{\text{epoch}},
 
 \subsubsection{基于偏振态的聚类（Fashion-MNIST数据集）}
 
-为验证偏振编码在Fashion-MNIST数据集上的有效性，我们从单一全息标签下提取了三种偏振态的散斑图进行分析。数据集包含6000个散斑图案，分别在s偏振、p偏振和混合偏振（s+p）三种条件下各采集2000个样本。采用UMAP和t-SNE降维方法对该数据集进行可视化分析。
-
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.85\textwidth]{Img/4/fashion-polarization-clustering.pdf}
     \bicaption[Fashion-MNIST不同偏振态的聚类分析]{\enspace Fashion-MNIST数据集不同偏振态的聚类分析。(a) UMAP降维；(b) t-SNE降维。}[Clustering analysis of Fashion-MNIST speckle patterns by polarization state]{\enspace Clustering analysis of Fashion-MNIST speckle patterns by polarization state. (a) UMAP; (b) t-SNE.}
     \label{fig:fashion_polarization_clustering}
 \end{figure}
+
+为验证偏振编码在Fashion-MNIST数据集上的有效性，我们从单一全息标签下提取了三种偏振态的散斑图进行分析。数据集包含6000个散斑图案，分别在s偏振、p偏振和混合偏振（s+p）三种条件下各采集2000个样本。采用UMAP和t-SNE降维方法对该数据集进行可视化分析。
 
 如图\ref{fig:fashion_polarization_clustering}所示，两种降维方法均清晰地将数据分离为三个独立的聚类簇，分别对应s偏振（红色）、p偏振（绿色）和混合偏振s+p（蓝色）三种编码状态。这一聚类模式与MNIST数据集的结果高度一致，再次验证了偏振编码的有效性。值得注意的是，尽管Fashion-MNIST图像包含更丰富的纹理和结构细节，但偏振编码引入的散斑统计差异仍然足够显著，使得三种偏振态能够被清晰区分。这表明偏振编码作为独立于图像内容的信息维度，能够稳定地改变散斑图案的统计特性，不受输入图像复杂度的影响。
 

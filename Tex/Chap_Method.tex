@@ -416,7 +416,7 @@ DLU-Net的总参数量约为1.24亿（124 million），其中编码器包含约4
 
 本文采用Adam优化器进行参数更新。Adam结合了动量（Momentum）和自适应学习率（RMSProp）的优点，在深度学习任务中表现优异，特别适合处理稀疏梯度和非平稳目标函数。
 
-主要超参数设置为：初始学习率$lr = 1 \times 10^{-4}$，一阶矩估计的指数衰减率$\beta_1 = 0.9$，二阶矩估计的指数衰减率$\beta_2 = 0.999$，数值稳定性常数$\epsilon = 1 \times 10^{-8}$，权重衰减（Weight Decay）设为0以避免过度正则化。
+主要超参数包括初始学习率$lr = 1 \times 10^{-4}$，一阶矩估计的指数衰减率$\beta_1 = 0.9$，二阶矩估计的指数衰减率$\beta_2 = 0.999$，数值稳定性常数$\epsilon = 1 \times 10^{-8}$，权重衰减（Weight Decay）设为0以避免过度正则化。
 
 \subsubsection{学习率调度}
 
@@ -505,9 +505,9 @@ lr_{\text{epoch}} = lr_{\text{init}} \times \gamma^{\text{epoch}},
 
 散斑图是高维数据（$128\times128 = 16384$维），直接可视化困难。本文采用以下两种经典的非线性降维方法：
 \begin{enumerate}
-    \item UMAP（Uniform Manifold Approximation and Projection）：基于流形学习和拓扑数据分析的降维方法，能够保留数据的全局和局部结构，特别适合捕捉多模光纤散斑数据中的复杂非线性关系。
+    \item UMAP（Uniform Manifold Approximation and Projection），基于流形学习和拓扑数据分析的降维方法，能够保留数据的全局和局部结构，特别适合捕捉多模光纤散斑数据中的复杂非线性关系。
     
-    \item t-SNE（t-Distributed Stochastic Neighbor Embedding）：基于概率分布的降维方法，擅长保留局部邻域关系，常用于聚类可视化。本文采用Barnes-Hut近似算法以提高计算效率。
+    \item t-SNE（t-Distributed Stochastic Neighbor Embedding），基于概率分布的降维方法，擅长保留局部邻域关系，常用于聚类可视化。本文采用Barnes-Hut近似算法以提高计算效率。
 \end{enumerate}
 
 这两种方法互为补充，UMAP更注重全局结构的保持，而t-SNE更强调局部聚类的分离度。

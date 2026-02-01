@@ -535,12 +535,12 @@ lr_{\text{epoch}} = lr_{\text{init}} \times \gamma^{\text{epoch}},
 
 为了可视化和量化散斑图案在不同全息标签和偏振态下的编码差异，我们采用了均匀流形近似与投影（UMAP）\cite{mcinnes2018umap}降维方法。UMAP利用流形学习和拓扑数据分析原理，特别适合捕获多模光纤散斑数据中固有的复杂非线性关系。如图\ref{fig:mnist_umap_hologram}（a-c）所示，UMAP分析清楚地揭示了散斑图案的结构化聚类，形成25个不同的簇，分别对应各自的全息标签。这种聚类模式在所有偏振条件下均保持一致且定义明确，证实了与每个全息标签相关的独特角度模式激发。
 
-为了增强分析全面性，我们进一步使用基于概率的t分布随机邻域嵌入（t-SNE）\cite{vandermaaten2008tsne}方法进行分析。考虑到数据集规模较大，我们采用了计算效率更高的Barnes-Hut近似算法\cite{vandermaaten2014accelerating}。如图\ref{fig:mnist_tsne_hologram}（d-f）所示，t-SNE投影呈现出更加明显的分离，突显出每个主要全息标签簇内清晰而独特的子簇结构。
+为了增强分析全面性，我们进一步使用基于概率的t分布随机邻域嵌入（t-SNE）\cite{vandermaaten2008tsne}方法进行分析。考虑到数据集规模较大，我们采用了计算效率更高的Barnes-Hut近似算法\cite{vandermaaten2014accelerating}。如图\ref{fig:mnist_tsne_hologram}（a-c）所示，t-SNE投影呈现出更加明显的分离，突显出每个主要全息标签簇内清晰而独特的子簇结构。
 
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.95\textwidth]{Img/4/mnist-tsne-hologram.pdf}
-    \bicaption[MNIST散斑图全息标签聚类分析（t-SNE）]{\enspace MNIST数据集散斑图的全息标签聚类分析（t-SNE降维）。（d） s偏振；（e） p偏振；（f） 混合偏振s+p。}[t-SNE clustering analysis of MNIST speckle patterns]{\enspace t-SNE clustering analysis of MNIST speckle patterns by holographic label. (d) s-polarization; (e) p-polarization; (f) mixed s+p polarization.}
+    \bicaption[MNIST散斑图全息标签聚类分析（t-SNE）]{\enspace MNIST数据集散斑图的全息标签聚类分析（t-SNE降维）。（a） s偏振；（b） p偏振；（c） 混合偏振s+p。}[t-SNE clustering analysis of MNIST speckle patterns]{\enspace t-SNE clustering analysis of MNIST speckle patterns by holographic label. (a) s-polarization; (b) p-polarization; (c) mixed s+p polarization.}
     \label{fig:mnist_tsne_hologram}
 \end{figure}
 
@@ -551,11 +551,11 @@ lr_{\text{epoch}} = lr_{\text{init}} \times \gamma^{\text{epoch}},
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.95\textwidth]{Img/4/mnist-correlation-matrix.pdf}
-    \bicaption[MNIST散斑图相关性矩阵分析]{\enspace MNIST数据集散斑图的相关性矩阵分析。（g） s偏振；（h） p偏振；（i） 混合偏振s+p。}[Correlation matrix analysis of MNIST speckle patterns]{\enspace Correlation matrix analysis of MNIST speckle patterns. (a) s-polarization; (b) p-polarization; (c) mixed s+p polarization.}
+    \bicaption[MNIST散斑图相关性矩阵分析]{\enspace MNIST数据集散斑图的相关性矩阵分析。（a） s偏振；（b） p偏振；（c） 混合偏振s+p。}[Correlation matrix analysis of MNIST speckle patterns]{\enspace Correlation matrix analysis of MNIST speckle patterns. (a) s-polarization; (b) p-polarization; (c) mixed s+p polarization.}
     \label{fig:mnist_correlation_matrix}
 \end{figure}
 
-为进一步定量验证全息标签编码的有效性，我们计算了获取散斑数据集的相关性矩阵，如图\ref{fig:mnist_correlation_matrix}（g-i）所示。在相关性矩阵中，散斑图ID按全息标签顺序进行排列，每个标签包含2000个散斑图案（例如，ID 0-1999对应第1个全息标签，ID 2000-3999对应第2个标签，依此类推，直至ID 48000-49999对应第25个标签）。
+为进一步定量验证全息标签编码的有效性，我们计算了获取散斑数据集的相关性矩阵，如图\ref{fig:mnist_correlation_matrix}（a-c）所示。在相关性矩阵中，散斑图ID按全息标签顺序进行排列，每个标签包含2000个散斑图案（例如，ID 0-1999对应第1个全息标签，ID 2000-3999对应第2个标签，依此类推，直至ID 48000-49999对应第25个标签）。
 
 相关性矩阵呈现出清晰的块状对角结构，表明相同全息标签产生的散斑图案具有显著的统计相关性。具体而言，对角线上的高亮方块对应于标签内部的强相关性，相关系数接近1，表明同一全息标签下的散斑图（尽管输入图像内容不同）保持高度一致的统计特性。相反，非对角线区域的相关系数接近零，表明不同全息标签之间的散斑图案几乎不相关。这种强烈的标签内高相关性与标签间低相关性的对比，从定量角度证实了每个全息标签编码通道的独特性和可区分性。该结果与前述UMAP和t-SNE聚类分析的定性观察完全一致，进一步验证了全息编码在多路复用传输中的有效性。值得注意的是，这一相关性结构在三种偏振态下均保持稳定，再次印证了全息编码的鲁棒性不受偏振态的影响。
 
@@ -581,11 +581,11 @@ lr_{\text{epoch}} = lr_{\text{init}} \times \gamma^{\text{epoch}},
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.85\textwidth]{Img/4/mnist-dual-encoding.pdf}
-    \bicaption[MNIST双编码联合聚类分析]{\enspace MNIST数据集双编码联合聚类分析。（c） UMAP降维；（d） t-SNE降维。}[Dual-encoding clustering analysis of MNIST speckle patterns]{\enspace Dual-encoding clustering analysis of MNIST speckle patterns. (c) UMAP; (d) t-SNE.}
+    \bicaption[MNIST双编码联合聚类分析]{\enspace MNIST数据集双编码联合聚类分析。（a） UMAP降维；（b） t-SNE降维。}[Dual-encoding clustering analysis of MNIST speckle patterns]{\enspace Dual-encoding clustering analysis of MNIST speckle patterns. (a) UMAP; (b) t-SNE.}
     \label{fig:mnist_dual_encoding}
 \end{figure}
 
-如图\ref{fig:mnist_dual_encoding}（c，d）所示，UMAP和t-SNE分析均清晰地揭示了50个明确可分的聚类簇，每个簇精确对应一个特定的全息标签-偏振态组合。这一结果从数据驱动的角度证实了双编码方案的协同效应：全息编码通过控制入射角度提供空间维度的模式调控，偏振编码通过控制偏振态提供偏振维度的模式调控，两种编码机制相互独立且可叠加作用，从而实现了$25 \times 2 = 50$个独立可区分的传输通道。
+如图\ref{fig:mnist_dual_encoding}（a，b）所示，UMAP和t-SNE分析均清晰地揭示了50个明确可分的聚类簇，每个簇精确对应一个特定的全息标签-偏振态组合。这一结果从数据驱动的角度证实了双编码方案的协同效应：全息编码通过控制入射角度提供空间维度的模式调控，偏振编码通过控制偏振态提供偏振维度的模式调控，两种编码机制相互独立且可叠加作用，从而实现了$25 \times 2 = 50$个独立可区分的传输通道。
     
 值得强调的是，这50个聚类簇在降维空间中均表现出良好的簇间分离度和簇内紧凑性，表明每个复合编码通道产生的散斑图案具有独特且稳定的统计特征。该结果充分验证了双编码方案的可扩展性和鲁棒性。理论上，如果进一步纳入混合偏振态（s+p），系统可支持$25 \times 3 = 75$个复合通道，显著提升多模光纤的信息传输容量。
     
@@ -611,7 +611,7 @@ lr_{\text{epoch}} = lr_{\text{init}} \times \gamma^{\text{epoch}},
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.89\textwidth]{Img/4/fashion-tsne-hologram.pdf}
-    \bicaption[Fashion-MNIST散斑图全息标签聚类分析（t-SNE）]{\enspace Fashion-MNIST数据集散斑图的全息标签聚类分析（t-SNE降维）。（d） s偏振；（e） p偏振；（f） 混合偏振s+p。}[t-SNE clustering analysis of Fashion-MNIST speckle patterns]{\enspace t-SNE clustering analysis of Fashion-MNIST speckle patterns by holographic label. (a) s-polarization; (b) p-polarization; (c) mixed s+p polarization.}
+    \bicaption[Fashion-MNIST散斑图全息标签聚类分析（t-SNE）]{\enspace Fashion-MNIST数据集散斑图的全息标签聚类分析（t-SNE降维）。（a） s偏振；（b） p偏振；（c） 混合偏振s+p。}[t-SNE clustering analysis of Fashion-MNIST speckle patterns]{\enspace t-SNE clustering analysis of Fashion-MNIST speckle patterns by holographic label. (a) s-polarization; (b) p-polarization; (c) mixed s+p polarization.}
     \label{fig:fashion_tsne_hologram}
 \end{figure}
 
@@ -620,7 +620,7 @@ lr_{\text{epoch}} = lr_{\text{init}} \times \gamma^{\text{epoch}},
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.89\textwidth]{Img/4/fashion-correlation-matrix.pdf}
-    \bicaption[Fashion-MNIST散斑图相关性矩阵分析]{\enspace Fashion-MNIST数据集散斑图的相关性矩阵分析。（g） s偏振；（h） p偏振；（i） 混合偏振s+p。}[Correlation matrix analysis of Fashion-MNIST speckle patterns]{\enspace Correlation matrix analysis of Fashion-MNIST speckle patterns. (a) s-polarization; (b) p-polarization; (c) mixed s+p polarization.}
+    \bicaption[Fashion-MNIST散斑图相关性矩阵分析]{\enspace Fashion-MNIST数据集散斑图的相关性矩阵分析。（a） s偏振；（b） p偏振；（c） 混合偏振s+p。}[Correlation matrix analysis of Fashion-MNIST speckle patterns]{\enspace Correlation matrix analysis of Fashion-MNIST speckle patterns. (a) s-polarization; (b) p-polarization; (c) mixed s+p polarization.}
     \label{fig:fashion_correlation_matrix}
 \end{figure}
 
@@ -646,7 +646,7 @@ lr_{\text{epoch}} = lr_{\text{init}} \times \gamma^{\text{epoch}},
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.85\textwidth]{Img/4/fashion-dual-encoding.png}
-    \bicaption[Fashion-MNIST双编码联合聚类分析]{\enspace Fashion-MNIST数据集双编码联合聚类分析。（c） UMAP降维；（d） t-SNE降维。}[Dual-encoding clustering analysis of Fashion-MNIST speckle patterns]{\enspace Dual-encoding clustering analysis of Fashion-MNIST speckle patterns. (c) UMAP; (d) t-SNE.}
+    \bicaption[Fashion-MNIST双编码联合聚类分析]{\enspace Fashion-MNIST数据集双编码联合聚类分析。（a） UMAP降维；（b） t-SNE降维。}[Dual-encoding clustering analysis of Fashion-MNIST speckle patterns]{\enspace Dual-encoding clustering analysis of Fashion-MNIST speckle patterns. (a) UMAP; (b) t-SNE.}
     \label{fig:fashion_dual_encoding}
 \end{figure}
 
@@ -702,7 +702,7 @@ lr_{\text{epoch}} = lr_{\text{init}} \times \gamma^{\text{epoch}},
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.85\textwidth]{Img/4/mnist-ssim-histogram.pdf}
-    \bicaption[MNIST测试集的SSIM统计分析]{\enspace MNIST数据集测试集的SSIM统计分析。（b） SSIM分布直方图；（c） 平均SSIM柱状图。}[SSIM statistical analysis of MNIST test dataset]{\enspace SSIM statistical analysis of MNIST test dataset. (b) SSIM distribution histogram; (c) Average SSIM bar chart.}
+    \bicaption[MNIST测试集的SSIM统计分析]{\enspace MNIST数据集测试集的SSIM统计分析。（a） SSIM分布直方图；（b） 平均SSIM柱状图。}[SSIM statistical analysis of MNIST test dataset]{\enspace SSIM statistical analysis of MNIST test dataset. (a) SSIM distribution histogram; (b) Average SSIM bar chart.}
     \label{fig:mnist_ssim_histogram}
 \end{figure}
 
@@ -711,7 +711,7 @@ lr_{\text{epoch}} = lr_{\text{init}} \times \gamma^{\text{epoch}},
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.85\textwidth]{Img/4/fashion-ssim-histogram.pdf}
-    \bicaption[Fashion-MNIST测试集的SSIM统计分析]{\enspace Fashion-MNIST数据集测试集的SSIM统计分析。（b） SSIM分布直方图；（c） 平均SSIM柱状图。}[SSIM statistical analysis of Fashion-MNIST test dataset]{\enspace SSIM statistical analysis of Fashion-MNIST test dataset. (b) SSIM distribution histogram; (c) Average SSIM bar chart.}
+    \bicaption[Fashion-MNIST测试集的SSIM统计分析]{\enspace Fashion-MNIST数据集测试集的SSIM统计分析。（a） SSIM分布直方图；（b） 平均SSIM柱状图。}[SSIM statistical analysis of Fashion-MNIST test dataset]{\enspace SSIM statistical analysis of Fashion-MNIST test dataset. (a) SSIM distribution histogram; (b) Average SSIM bar chart.}
     \label{fig:fashion_ssim_histogram}
 \end{figure}
 
@@ -743,17 +743,17 @@ lr_{\text{epoch}} = lr_{\text{init}} \times \gamma^{\text{epoch}},
     \end{tabular}
 \end{table}
 
-表\ref{tab:ssim_by_dataset_polarization}系统总结了两个数据集在不同偏振态下的SSIM统计指标，包括平均值、标准差和中位数。从统计结果可以得出以下重要结论：
+表\ref{tab:ssim_by_dataset_polarization}系统总结了两个数据集在不同偏振态下的SSIM统计指标，包括平均值、标准差和中位数。从统计结果可以得出以下结论：
 
-（1）偏振不变性：在两个数据集上，三种偏振态下的平均SSIM均保持一致（MNIST: 0.93，Fashion-MNIST: 0.72），表明DeepLeakyU-Net具有显著的偏振不变性。网络能够稳健地处理不同偏振编码下的散斑图案，这一特性对于实际应用至关重要，意味着系统对偏振态的变化不敏感，提高了实用性和可靠性。
+（1）在两个数据集上，三种偏振态下的平均SSIM均保持一致（MNIST: 0.93，Fashion-MNIST: 0.72），表明DeepLeakyU-Net具有显著的偏振不变性。网络能够稳健地处理不同偏振编码下的散斑图案，这一特性对于实际应用至关重要，意味着系统对偏振态的变化不敏感，提高了实用性和可靠性。
 
-（2）重建质量的数据集依赖性：MNIST数据集的平均SSIM达到0.93，而Fashion-MNIST为0.72。这一显著差异表明重建质量与图像内容复杂度密切相关。Fashion-MNIST包含更丰富的纹理细节和更复杂的空间结构，导致散斑图案到图像的映射更加困难。尽管如此，0.72的SSIM值仍然表明网络能够恢复图像的主要结构特征。
+（2）MNIST数据集的平均SSIM达到0.93，而Fashion-MNIST为0.72。这一显著差异表明重建质量与图像内容复杂度密切相关。Fashion-MNIST包含更丰富的纹理细节和更复杂的空间结构，导致散斑图案到图像的映射更加困难。尽管如此，0.72的SSIM值仍然表明网络能够恢复图像的主要结构特征。
 
-（3）重建稳定性：MNIST和Fashion-MNIST的SSIM标准差分别为0.04和0.08，表明网络在不同样本上的重建质量相对稳定。Fashion-MNIST的标准差略大，反映了复杂图像重建中的更大变异性。中位数SSIM（MNIST: 0.94，Fashion-MNIST: 0.74）略高于平均值，表明大多数样本的重建质量超过平均水平，SSIM分布呈现一定的集中性。
+（3）MNIST和Fashion-MNIST的SSIM标准差分别为0.04和0.08，表明网络在不同样本上的重建质量相对稳定。Fashion-MNIST的标准差略大，反映了复杂图像重建中的更大变异性。中位数SSIM（MNIST: 0.94，Fashion-MNIST: 0.74）略高于平均值，表明大多数样本的重建质量超过平均水平，SSIM分布呈现一定的集中性。
 
-（4）图像复杂度的影响：Fashion-MNIST的平均SSIM相比MNIST下降0.21（从0.93降至0.72），这一显著差异凸显了图像内容复杂度对重建质量的重要影响。服装图像的纹理细节（如褶皱、图案）和不规则形状特征增加了散斑-图像映射的复杂性。这一结果为未来在更复杂的自然图像上应用该方法提供了参考依据。
+（4）Fashion-MNIST的平均SSIM相比MNIST下降0.21（从0.93降至0.72），这一显著差异凸显了图像内容复杂度对重建质量的重要影响。服装图像的纹理细节（如褶皱、图案）和不规则形状特征增加了散斑-图像映射的复杂性。这一结果为未来在更复杂的自然图像上应用该方法提供了参考依据。
 
-（5）偏振编码的积极作用：三种偏振态的SSIM分布高度重叠且数值一致，这进一步验证了偏振编码不仅不会对重建质量产生负面影响，反而为多路复用提供了额外的信息维度，实现了在不降低重建质量的前提下提升信息容量的目标。
+（5）三种偏振态的SSIM分布高度重叠且数值一致，这进一步验证了偏振编码不仅不会对重建质量产生负面影响，反而为多路复用提供了额外的信息维度，实现了在不降低重建质量的前提下提升信息容量的目标。
 
 \subsection{训练收敛性分析}\label{sec:convergence_analysis}
 
@@ -808,13 +808,13 @@ lr_{\text{epoch}} = lr_{\text{init}} \times \gamma^{\text{epoch}},
 
 表\ref{tab:comparison_networks}总结了两种网络架构在重建质量、模型规模、推理速度和训练效率等方面的定量对比结果。从对比数据可以得出以下分析：
 
-（1）重建质量提升：DLU-Net的平均SSIM为0.93，相比标准U-Net的0.91提升了2.2\%（绝对值提升0.02）。虽然提升幅度看似较小，但在SSIM接近1.0的高分区间，每0.01的提升都对应着显著的视觉质量改善。通过对比重建图像可以观察到，DLU-Net在边缘清晰度、细节保真度和噪声抑制等方面均优于标准U-Net。这一提升主要归功于Leaky ReLU激活函数改善了深层编码器的梯度流动，避免了ReLU的神经元失活问题，使得网络能够学习到更丰富的特征表示。
+（1）DLU-Net的平均SSIM为0.93，相比标准U-Net的0.91提升了2.2\%（绝对值提升0.02）。虽然提升幅度看似较小，但在SSIM接近1.0的高分区间，每0.01的提升都对应着显著的视觉质量改善。通过对比重建图像可以观察到，DLU-Net在边缘清晰度、细节保真度和噪声抑制等方面均优于标准U-Net。这一提升主要归功于Leaky ReLU激活函数改善了深层编码器的梯度流动，避免了ReLU的神经元失活问题，使得网络能够学习到更丰富的特征表示。
 
-（2）模型规模增加：DLU-Net的参数量为124M，相比标准U-Net的20M增加了520\%。这一显著增加源于两方面：一是网络深度的增加（7层编码器/解码器 vs. 5层），二是基础特征数的大幅增加（128 vs. 64）以及更大的中间层通道数。更大的模型容量使得DLU-Net能够提取更丰富的多尺度特征，更好地捕捉散斑图案中的复杂空间关系。尽管参数量显著增加，但通过Batch Normalization和Dropout等正则化技术，网络并未出现过拟合现象，保持了良好的泛化能力。
+（2）DLU-Net的参数量为124M，相比标准U-Net的20M增加了520\%。这一显著增加源于两方面：一是网络深度的增加（7层编码器/解码器 vs. 5层），二是基础特征数的大幅增加（128 vs. 64）以及更大的中间层通道数。更大的模型容量使得DLU-Net能够提取更丰富的多尺度特征，更好地捕捉散斑图案中的复杂空间关系。尽管参数量显著增加，但通过Batch Normalization和Dropout等正则化技术，网络并未出现过拟合现象，保持了良好的泛化能力。
 
-（3）推理速度影响：DLU-Net的单张图像推理时间为18 ms，相比标准U-Net的12 ms增加了50\%。这一增加与参数量和计算复杂度的提升相关，但增加幅度远小于参数量的增长幅度，说明网络结构设计较为高效。值得注意的是，18 ms的推理时间对应约55 FPS的帧率，仍然满足准实时成像的需求。对于大多数应用场景，这一推理速度是完全可接受的。
+（3）DLU-Net的单张图像推理时间为18 ms，相比标准U-Net的12 ms增加了50\%。这一增加与参数量和计算复杂度的提升相关，但增加幅度远小于参数量的增长幅度，说明网络结构设计较为高效。值得注意的是，18 ms的推理时间对应约55 FPS的帧率，仍然满足准实时成像的需求。对于大多数应用场景，这一推理速度是完全可接受的。
 
-（4）训练效率：DLU-Net的训练时间为3.7小时（40 epochs），相比标准U-Net的1.8小时增加了106\%。训练时间的增加主要来自于参数量和网络深度的显著提升，而非激活函数本身。从性价比角度考虑，尽管训练时间翻倍，但换取了2.2\%的重建质量提升，对于需要高保真度重建的应用场景是非常值得的。
+（4）DLU-Net的训练时间为3.7小时（40 epochs），相比标准U-Net的1.8小时增加了106\%。训练时间的增加主要来自于参数量和网络深度的显著提升，而非激活函数本身。从性价比角度考虑，尽管训练时间翻倍，但换取了2.2\%的重建质量提升，对于需要高保真度重建的应用场景是非常值得的。
 
 综上所述，DLU-Net通过在编码器中全面采用Leaky ReLU激活函数、使用步长卷积替代池化层以及增加网络深度，在重建质量上取得了显著提升，同时保持了可接受的计算成本。这充分验证了Leaky ReLU在缓解深层编码器梯度消失问题、改善深层网络训练稳定性方面的有效性，以及步长卷积在保留空间信息方面的优势。
 

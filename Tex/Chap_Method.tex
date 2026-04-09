@@ -121,12 +121,20 @@ S_{offset}^{DMD}=\left\{
 \subsection{光学系统设计}\label{sec:optical_design}
 
 本节详细描述光学实验系统的设计与搭建。图\ref{fig:optical_setup}为实验光路示意图，展示了从光源到探测器的完整光路，包括全息编码模块、偏振编码模块、光纤耦合系统和远场成像系统。
+同时，为与光路示意图相互印证，图\ref{fig:optical_setup_obj}给出了实验光学系统实物图，用于展示系统的实际搭建形态及关键器件的物理布局。
 
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.95\textwidth]{Img/4/optical-setup.png}
     \bicaption[实验光学系统示意图]{\enspace 实验光学系统示意图。光路包括：光源系统（532 nm激光器+保偏光纤PMF）、DMD全息编码模块、偏振控制与编码模块（HWP1、LP1、HWP2、BD、QWP1）、光纤耦合系统（L2、L3、L4、Obj1）和远场成像系统（Obj2、L5、L6、相机）。MMF为阶跃型多模光纤（纤芯100 μm，NA=0.22，长度20 cm）。}[Schematic diagram of the experimental optical setup]{\enspace Schematic diagram of the experimental optical setup, including light source (532 nm laser + PMF), DMD holographic encoding, polarization control modules (HWP1, LP1, HWP2, BD, QWP1), fiber coupling system (L2, L3, L4, Obj1), and far-field imaging system (Obj2, L5, L6, Camera). MMF: step-index multimode fiber (core 100 μm, NA=0.22, length 20 cm).}
     \label{fig:optical_setup}
+\end{figure}
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.95\textwidth]{Img/4/optical-setup_obj.png}
+    \bicaption[实验光学系统实物图]{\enspace 实验光学系统实物图。}[Photograph of the experimental optical setup]{\enspace Photograph of the experimental optical setup.}
+    \label{fig:optical_setup_obj}
 \end{figure}
 
 光源采用单纵模激光器，输出光束首先耦合进保偏光纤（PMF）以提高光束质量和偏振稳定性。保偏光纤输出的光束以$24^\circ$入射角照明DMD表面。在DMD之前放置半波片HWP1用于调整入射线偏振方向，使其与DMD微镜的最佳方向对齐，从而最大化衍射效率并最小化DMD引入的椭圆偏振畸变。透镜L1用于准直和扩束，使光束均匀覆盖DMD表面。

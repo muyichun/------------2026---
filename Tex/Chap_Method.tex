@@ -683,7 +683,7 @@ lr_{\text{epoch}} = lr_{\text{init}} \times \gamma^{\text{epoch}},
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=0.9\textwidth]{Img/4/mnist-reconstruction.pdf}
+    \includegraphics[width=0.8\textwidth]{Img/4/mnist-reconstruction.pdf}
     \bicaption[MNIST不同偏振态下的图像重建结果]{\enspace MNIST数据集在不同偏振态下的图像重建结果示例。}[Representative MNIST image reconstruction results]{\enspace Representative MNIST image reconstruction results under different polarization states.}
     \label{fig:mnist_reconstruction}
 \end{figure}
@@ -696,7 +696,7 @@ lr_{\text{epoch}} = lr_{\text{init}} \times \gamma^{\text{epoch}},
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=0.9\textwidth]{Img/4/fashion_reconstruction.pdf}
+    \includegraphics[width=0.8\textwidth]{Img/4/fashion_reconstruction.pdf}
     \bicaption[Fashion-MNIST不同偏振态下的图像重建结果]{\enspace Fashion-MNIST数据集在不同偏振态下的图像重建结果示例。}[Representative Fashion-MNIST image reconstruction results]{\enspace Representative Fashion-MNIST image reconstruction results under different polarization states.}
     \label{fig:fashion_reconstruction}
 \end{figure}
@@ -765,14 +765,14 @@ lr_{\text{epoch}} = lr_{\text{init}} \times \gamma^{\text{epoch}},
 
 \subsection{训练收敛性分析}\label{sec:convergence_analysis}
 
-为全面评估网络的训练过程，我们记录了训练损失（MAE）、验证损失（MAE）、验证SSIM和学习率等关键指标在40个训练周期（epochs）内的变化情况。网络采用Adam优化器，初始学习率为$1\times10^{-4}$，每个epoch后学习率衰减系数为0.92。训练在配备两块NVIDIA GeForce RTX 4090 GPU的工作站上进行，每个epoch耗时约4.5分钟，总训练时间约3.7小时。
-
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=0.75\textwidth]{Img/4/mnist-training-curves.pdf}
+    \includegraphics[width=0.7\textwidth]{Img/4/mnist-training-curves.pdf}
     \bicaption[MNIST数据集的训练过程损失曲线]{\enspace MNIST数据集的训练过程损失曲线。图中展示了三种偏振态（s偏振、p偏振、混合偏振）的训练损失和验证损失随训练周期的变化。}[Training and validation loss curves for MNIST dataset]{\enspace Training and validation loss curves for MNIST dataset. The figure shows training and validation losses across three polarization states (s-pol, p-pol, mixed) over training epochs.}
     \label{fig:mnist_training_curves}
 \end{figure}
+
+为全面评估网络的训练过程，我们记录了训练损失（MAE）、验证损失（MAE）、验证SSIM和学习率等关键指标在40个训练周期（epochs）内的变化情况。网络采用Adam优化器，初始学习率为$1\times10^{-4}$，每个epoch后学习率衰减系数为0.92。训练在配备两块NVIDIA GeForce RTX 4090 GPU的工作站上进行，每个epoch耗时约4.5分钟，总训练时间约3.7小时。
 
 \begin{figure}[!htbp]
     \centering
